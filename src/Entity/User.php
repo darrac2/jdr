@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -44,6 +46,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[ORM\OneToOne(mappedBy: 'User', cascade: ['persist', 'remove'])]
+    private ?Forum $forum = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Ressource $ressource = null;
+
+
+
+    public function __construct()
+    {
+        
+    }
 
     public function getId(): ?int
     {
@@ -174,4 +189,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getForum(): ?Forum
+    {
+        return $this->forum;
+    }
+
+    public function setForum(?Forum $forum): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($forum === null && $this->forum !== null) {
+            $this->forum->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($forum !== null && $forum->getUser() !== $this) {
+            $forum->setUser($this);
+        }
+
+        $this->forum = $forum;
+
+        return $this;
+    }
+
+    public function getRessource(): ?Ressource
+    {
+        return $this->ressource;
+    }
+
+    public function setRessource(?Ressource $ressource): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($ressource === null && $this->ressource !== null) {
+            $this->ressource->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($ressource !== null && $ressource->getUser() !== $this) {
+            $ressource->setUser($this);
+        }
+
+        $this->ressource = $ressource;
+
+        return $this;
+    }
+
 }

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Forum index{% endblock %}
+
+{% block body %}
+    <h1>Forum index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Date_crea</th>
+                <th>Ordre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for forume in forums %}
+            <tr>
+                <td>{{ forume.id }}</td>
+                <td>{{ forume.titre }}</td>
+                <td>{{ forume.description }}</td>
+                <td>{{ forume.dateCrea ? forume.dateCrea|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ forume.ordre }}</td>
+                <td>
+                    <a href="{{ path('app_forum_show', {'id': forume.id}) }}">show</a>
+                    <a href="{{ path('app_forum_edit', {'id': forume.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    {{ include('forum/_form.html.twig') }}
+{% endblock %}

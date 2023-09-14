@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Forum{% endblock %}
+
+{% block body %}
+    <h1>Forum</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ forum.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ forum.titre }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ forum.description }}</td>
+            </tr>
+            <tr>
+                <th>Date_crea</th>
+                <td>{{ forum.dateCrea ? forum.dateCrea|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Ordre</th>
+                <td>{{ forum.ordre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_forum_index') }}">back to list</a>
+
+    <a href="{{ path('app_forum_edit', {'id': forum.id}) }}">edit</a>
+     {{ render(controller(
+        'App\\Controller\\ForumCommentaireController::forumindex',
+        {'id' : forum.id }
+    )) }}
+
+    {{ include('forum_commentaire/_form.html.twig') }}
+    
+    
+{% endblock %}
