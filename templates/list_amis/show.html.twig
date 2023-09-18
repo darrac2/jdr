@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ListAmis{% endblock %}
+
+{% block body %}
+    <h1>ListAmis</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ list_ami.id }}</td>
+            </tr>
+            <tr>
+                <th>Pending</th>
+                <td>{{ list_ami.pending ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_list_amis_index') }}">back to list</a>
+
+    <a href="{{ path('app_list_amis_edit', {'id': list_ami.id}) }}">edit</a>
+
+    {{ include('list_amis/_delete_form.html.twig') }}
+{% endblock %}

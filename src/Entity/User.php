@@ -53,11 +53,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Ressource $ressource = null;
 
+    #[ORM\OneToMany(mappedBy: 'idUser', targetEntity: ListAmis::class)]
+    private Collection $listAmis;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $numAmis = null;
+
 
 
     public function __construct()
     {
-        
+        $this->listAmis = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -230,6 +236,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->ressource = $ressource;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ListAmis>
+     */
+    public function getListAmis(): Collection
+    {
+        return $this->listAmis;
+    }
+
+    public function addListAmi(ListAmis $listAmi): static
+    {
+        if (!$this->listAmis->contains($listAmi)) {
+            $this->listAmis->add($listAmi);
+            $listAmi->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListAmi(ListAmis $listAmi): static
+    {
+        if ($this->listAmis->removeElement($listAmi)) {
+            // set the owning side to null (unless already changed)
+            if ($listAmi->getIdUser() === $this) {
+                $listAmi->setIdUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNumAmis(): ?int
+    {
+        return $this->numAmis;
+    }
+
+    public function setNumAmis(?int $numAmis): static
+    {
+        $this->numAmis = $numAmis;
 
         return $this;
     }

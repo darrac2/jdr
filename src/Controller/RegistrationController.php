@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +29,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -38,6 +39,21 @@ class RegistrationController extends AbstractController
             //ajout date now
             $date = new DateTime('now');
             $user->setDateCreation($date);
+            //ajout nombre aleatoire
+            $num_amis = rand(1000,9999);
+            //get pseudo user from form
+            $pseudo = $form->get('pseudo')->getData();
+            // essaie de check le num et l'user pseudo
+            $repository = $doctrine->getRepository(User::class);
+            if ($repository->findOneBy(array('pseudo' => $pseudo)) == true ){
+                $this->addFlash('verify_email_error', 'Ce pseudo est deja utilisé');
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
+            //push num
+            $user->setNumAmis($num_amis);
+            
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(

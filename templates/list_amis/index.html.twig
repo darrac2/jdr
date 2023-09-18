@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ListAmis index{% endblock %}
+
+{% block body %}
+    <h1>ListAmis index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>user</th>
+                <th>Amis</th>
+                <th>Pending</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for list_ami in list_amis %}
+            <tr>
+                <td>{{ list_ami.id }}</td>
+                <td>
+                    {% for user in users %}
+                        {% if user == list_ami.idUser %}
+                            {{ user.pseudo }}
+                        {% endif %}
+                    {% endfor %}
+                 </td>
+                 <td>
+                 {% for amis in users %}
+                        {% if amis == list_ami.idAmis %}
+                            {{ amis.pseudo }}
+                        {% endif %}
+                    {% endfor %}
+                 </td>
+                <td>{{ list_ami.pending ? 'Yes' : 'No' }}</td>
+            </tr>
+        {% else %}
+        
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+            
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_list_amis_new') }}">Create new</a>
+{% endblock %}
