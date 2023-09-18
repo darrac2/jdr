@@ -48,7 +48,7 @@ class ListAmisController extends AbstractController
                 ]);
             }
             $listAmi->setIdAmis($amis);
-            //demande envoié
+            //demande
             $listAmi->setPending(0);
             //user 
             $repository = $doctrine->getRepository(User::class);
@@ -65,6 +65,37 @@ class ListAmisController extends AbstractController
             'list_ami' => $listAmi,
             'form' => $form,
         ]);
+    }
+    #[Route('/ajouter/{id}', name: 'app_list_amis_ajout', methods: ['GET', 'POST'])]
+    public function ajout(User$amis, ManagerRegistry $doctrine, EntityManagerInterface $entityManager )
+    {
+        //creer new amis
+        $listAmi = new ListAmis();
+        //user
+        $repository = $doctrine->getRepository(User::class);
+        $email = $this->getUser()->getUserIdentifier();
+        $user = $repository->findOneBy(array('email' => $email));
+        $listAmi->setIdUser($user);
+        // ajout amis
+        $listAmi->setIdAmis($amis);
+        //demande en attente 
+        $listAmi->setPending(0);
+
+        $entityManager->flush();
+        //message alert envoie reussi
+
+        //redirection
+        return $this->redirectToRoute('app_list_amis_index', [], Response::HTTP_SEE_OTHER);
+
+    }
+    #[Route('/{id}', name: 'app_list_amis_accepter', methods: ['GET', 'POST'])]
+    public function validation(ListAmis $listAmi, EntityManagerInterface $entityManager )
+    {
+        
+        $listAmi->setPending(true);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_list_amis_index', [], Response::HTTP_SEE_OTHER);
+
     }
 
 

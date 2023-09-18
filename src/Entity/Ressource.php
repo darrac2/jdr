@@ -42,7 +42,7 @@ class Ressource
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_publication = null;
 
-    #[ORM\ManyToOne(inversedBy: 'ressource', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'ressource')]
     private ?User $user = null;
 
     #[ORM\Column(nullable: true)]

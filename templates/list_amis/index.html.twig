@@ -12,6 +12,7 @@
                 <th>user</th>
                 <th>Amis</th>
                 <th>Pending</th>
+                <th>Accepter</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,8 @@
                     {% endfor %}
                  </td>
                 <td>{{ list_ami.pending ? 'Yes' : 'No' }}</td>
+                <td><a href="{{ path('app_list_amis_accepter', {'id': list_ami.id}) }}">accepter</a></td>
+
             </tr>
         {% else %}
         
