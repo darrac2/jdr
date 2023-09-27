@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\ListAmis;
 use App\Entity\User;
 use App\Form\ListAmisType;
@@ -96,16 +97,20 @@ class ListAmisController extends AbstractController
         $listAmi->setPending(true);
         $entityManager->persist($listAmi);
         $entityManager->flush();
-        $idAmis = $listAmi->getIdUser();
-        $idUser = $listAmi->getIdAmis();
+        //$idAmis = $listAmi->getIdUser();
+        //$idUser = $listAmi->getIdAmis();
+        // creer un check avant une nouvelle relation
         //creer new amis
+        /*
         $listAmi2 = new ListAmis();
         //user
         $listAmi2->setIdUser($idUser);
         $listAmi2->setIdAmis($idAmis);
         $listAmi2->setPending(1);
         $entityManager->persist($listAmi2);
-        $entityManager->flush();
+        $entityManager->flush();*/
+        //creer conversation
+
         
         return $this->redirectToRoute('app_list_amis_index', [], Response::HTTP_SEE_OTHER);
 

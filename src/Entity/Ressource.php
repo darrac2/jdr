@@ -174,4 +174,9 @@ class Ressource
 
         return $this;
     }
+
+    public function isPrivate(): ?bool
+    {
+        return $this->private;
+    }
 }

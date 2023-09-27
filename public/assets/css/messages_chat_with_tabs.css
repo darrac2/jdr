@@ -112,9 +112,11 @@ img{ max-width:100%;}
   font-size: 15px;
   min-height: 48px;
   width: 100%;
+  
 }
 
-.type_msg {border-top: 1px solid #c4c4c4;position: relative;}
+.type_msg {border-top: 1px solid #c4c4c4;position: relative; display: none;}
+.active_msg{display: inline;}
 .msg_send_btn {
   background: #05728f none repeat scroll 0 0;
   border: medium none;

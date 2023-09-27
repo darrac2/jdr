@@ -62,16 +62,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'userfirst', targetEntity: Conversation::class)]
     private Collection $conversations;
 
-    #[ORM\OneToMany(mappedBy: 'usersend', targetEntity: Message::class)]
-    private Collection $messages;
-
 
 
     public function __construct()
     {
         $this->listAmis = new ArrayCollection();
         $this->conversations = new ArrayCollection();
-        $this->messages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -320,34 +316,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Message>
-     */
-    public function getMessages(): Collection
+    public function isIsVerified(): ?bool
     {
-        return $this->messages;
+        return $this->isVerified;
     }
 
-    public function addMessage(Message $message): static
-    {
-        if (!$this->messages->contains($message)) {
-            $this->messages->add($message);
-            $message->setUsersend($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMessage(Message $message): static
-    {
-        if ($this->messages->removeElement($message)) {
-            // set the owning side to null (unless already changed)
-            if ($message->getUsersend() === $this) {
-                $message->setUsersend(null);
-            }
-        }
-
-        return $this;
-    }
 
 }

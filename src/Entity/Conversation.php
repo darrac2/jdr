@@ -25,13 +25,13 @@ class Conversation
     #[ORM\ManyToOne(inversedBy: 'conversations')]
     private ?User $UserSecond = null;
 
-    #[ORM\OneToMany(mappedBy: 'conversation', targetEntity: Message::class)]
-    private Collection $messages;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $message = null;
 
-    public function __construct()
-    {
-        $this->messages = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'conversations')]
+    private ?ListAmis $listAmis = null;
+
+
 
     public function getId(): ?int
     {
@@ -74,33 +74,28 @@ class Conversation
         return $this;
     }
 
-    /**
-     * @return Collection<int, Message>
-     */
-    public function getMessages(): Collection
+    public function getMessage(): ?string
     {
-        return $this->messages;
+        return $this->message;
     }
 
-    public function addMessage(Message $message): static
+    public function setMessage(string $message): static
     {
-        if (!$this->messages->contains($message)) {
-            $this->messages->add($message);
-            $message->setConversation($this);
-        }
+        $this->message = $message;
 
         return $this;
     }
 
-    public function removeMessage(Message $message): static
+    public function getListAmis(): ?ListAmis
     {
-        if ($this->messages->removeElement($message)) {
-            // set the owning side to null (unless already changed)
-            if ($message->getConversation() === $this) {
-                $message->setConversation(null);
-            }
-        }
+        return $this->listAmis;
+    }
+
+    public function setListAmis(?ListAmis $listAmis): static
+    {
+        $this->listAmis = $listAmis;
 
         return $this;
     }
+
 }

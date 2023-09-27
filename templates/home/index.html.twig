@@ -39,7 +39,8 @@
           </div>
           <div class="inbox_chat">
           {% for amis in list_amis %}
-            <div class="chat_list " style="cursor: pointer;" id="{{amis.id}}" onclick="active('{{amis.id}}')">
+          {% if amis.idUser == app.user %}
+            <div class="chat_list" style="cursor: pointer;" id="{{amis.id}}" onclick="active('{{amis.id}}')">
               <div class="chat_people">
                 <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                 <div class="chat_ib">
@@ -48,101 +49,75 @@
                 </div>
               </div>
             </div>
+          {% endif %}
+          {% if amis.idAmis == app.user %}
+            <div class="chat_list" style="cursor: pointer;" id="{{amis.id}}" onclick="active('{{amis.id}}')">
+              <div class="chat_people">
+                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                <div class="chat_ib">
+                  <h5>{{amis.idUser.pseudo}} <span class="chat_date">date</span></h5>
+                  <p>{{amis.idUser.description}}</p>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+            
             
           {% endfor %}
             
           </div>
         </div>
         <div class="mesgs">
-        {% for conversation in conversations %}
-            <div class="msg_history " id="#inbox-message-1">
-                <div class="incoming_msg">
-                <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="received_msg">
-                    <div class="received_withd_msg">
-                    <p>Test which is a new approach to have all
-                        solutions</p>
-                    <span class="time_date"> 11:01 AM    |    June 9</span></div>
+        {% set count = 0 %}
+        {% for messagebox in list_amis %}
+            <div class="msg_history" id="inbox-message-{{messagebox.id}}">
+                
+                {% for message in conversations %}
+                {% if messagebox.idUser == message.userfirst or messagebox.idamis == message.userfirst %}
+                {% if messagebox.idUser == message.usersecond or messagebox.idamis == message.usersecond %}
+                  {% if  message.userfirst == app.user %}
+                    <div class="incoming_msg">
+                      <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                      <div class="received_msg">
+                          <div class="received_withd_msg">
+                          <p>{{message.message}}</p>
+                          <span class="time_date"> {{ message.date|date('Y-m-d H:i:s')}}</span></div>
+                      </div>
+                    </div>
+                  {% endif %}
+                  {% if message.usersecond == app.user %}
+                    <div class="outgoing_msg">
+                        <div class="sent_msg">
+                        <p>{{message.message}}</p>
+                        <span class="time_date"> {{ message.date|date('Y-m-d H:i:s')}}</span> </div>
+                    </div>
+                  {% endif %}
+                
+                {% endif %}
+                {% endif %}
+                
+                {% endfor %}
                 </div>
+                {% if messagebox.idUser == app.user %}
+                  <div class="type_msg" id="form_msg_{{messagebox.id}}">
+                  <form class="input_msg_write" id="form">
+                    <input type="text" class="write_msg" placeholder="Type a message" id="message"/>
+                    <button class="msg_send_btn" hrefs="" onclick="senddata('{{ messagebox.idamis.id }}')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                  </form>
                 </div>
-                <div class="outgoing_msg">
-                <div class="sent_msg">
-                    <p>Test which is a new approach to have all
-                    solutions</p>
-                    <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-                </div>
-            </div>
+                {% endif %}
+                {% if messagebox.idamis == app.user %}
+                  <div class="type_msg" id="form_msg_{{messagebox.id}}">
+                <form class="input_msg_write" id="form ">
+                  <input type="text" class="write_msg" placeholder="Type a message" id="message"/>
+                  <button class="msg_send_btn" href="" onclick="senddata('{{ messagebox.idUser.id }}')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                </form>
+              </div>
+                {% endif %}
+            
+            
         {% endfor %}
-          <div class="msg_history active" id="#inbox-message-2">
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test, which is a new approach to have</p>
-                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-              </div>
-            </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Apollo University, Delhi, India Test</p>
-                <span class="time_date"> 11:01 AM    |    Today</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>We work directly with our designers and suppliers,
-                    and sell direct to you, which means quality, exclusive
-                    products, at a price anyone can afford.</p>
-                  <span class="time_date"> 11:01 AM    |    Today</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="msg_history" id="#inbox-message-2">
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test </p>
-                  <span class="time_date"> 11:01 AM    |    June 9</span></div>
-              </div>
-            </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Test which is a new approach to have all
-                  solutions</p>
-                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test, which is a new approach to have</p>
-                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-              </div>
-            </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Apollo University, Delhi, India Test</p>
-                <span class="time_date"> 11:01 AM    |    Today</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>We work directly with our designers and suppliers,
-                    and sell direct to you, which means quality, exclusive
-                    products, at a price anyone can afford.</p>
-                  <span class="time_date"> 11:01 AM    |    Today</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="type_msg">
-            <div class="input_msg_write">
-              <input type="text" class="write_msg" placeholder="Type a message" />
-              <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-            </div>
-          </div>
+          
         </div>
       </div>
       
@@ -158,24 +133,38 @@
         
         //active default premiere conv
         function active(id) {
+
           //get element by class if existe
-          if(getElementsByClassName("active_chat") === null){
-            
-          }else{
-            element.removeAttribute("active_chat");
+          if(document.querySelector('.active_chat') != null){
+            document.querySelector('.active_chat').classList.remove("active_chat");
           }
           var element = document.getElementById(id);
-          console.log(id);
           element.classList.add("active_chat");
+          var messagebox = document.getElementById("inbox-message-"+id);
+          
+          if(document.querySelector('.active') != null){
+            document.querySelector('.active').classList.remove("active");
+          }
+          messagebox.classList.add("active");
+          
+          if(document.querySelector('.active_msg') != null){
+            document.querySelector('.active_msg').classList.remove("active_msg");
+          }
+          var formmessagebox = document.getElementById("form_msg_"+id);
+          
+          formmessagebox.classList.add("active_msg");
         }
-        console.log("{{list_amis.0.id}}");
-
+        //function submit
+                
+       
+/*
+        //creer la connection au serveur mercure
         const eventSource = new EventSource("{{ mercure('https://localhost/message/1')|escape('js') }}");
         eventSource.onmessage = event => {
             // Will be called every time an update is published by the server
 
             console.log(JSON.parse(event.data));
-        }
+        }*/
     </script>
 {% endblock %}
 

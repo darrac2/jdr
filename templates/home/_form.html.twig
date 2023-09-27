@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="input_msg_write">
+        <input type="text" class="write_msg" name="message" placeholder="Type a message" />
+        <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true">{{ button_label|default('Save') }}</i></button>
+    </div>
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
