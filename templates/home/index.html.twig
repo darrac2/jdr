@@ -39,7 +39,7 @@
           </div>
           <div class="inbox_chat">
           {% for amis in list_amis %}
-            <div class="chat_list " id="{{amis.id}}" >
+            <div class="chat_list " style="cursor: pointer;" id="{{amis.id}}" onclick="active('{{amis.id}}')">
               <div class="chat_people">
                 <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                 <div class="chat_ib">
@@ -50,18 +50,6 @@
             </div>
             
           {% endfor %}
-            
-            
-            <div class="chat_list active_chat">
-              <div class="chat_people active_chat" data-toggle="tab" data-target="#inbox-message-2">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
             
           </div>
         </div>
@@ -164,27 +152,31 @@
 </section>
 
 </div>
-{% endblock %}
-{% block javascripts %}
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        
-
-    </script>
     <script>
+        
         //active default premiere conv
+        function active(id) {
+          //get element by class if existe
+          if(getElementsByClassName("active_chat") === null){
+            
+          }else{
+            element.removeAttribute("active_chat");
+          }
+          var element = document.getElementById(id);
+          console.log(id);
+          element.classList.add("active_chat");
+        }
+        console.log("{{list_amis.0.id}}");
 
-        var elements = document.getElementsByClassName("chat_list");
-        console.log("Hello world!");
-        //console.log(elements);
         const eventSource = new EventSource("{{ mercure('https://localhost/message/1')|escape('js') }}");
         eventSource.onmessage = event => {
             // Will be called every time an update is published by the server
+
             console.log(JSON.parse(event.data));
-        }
-        function activechat(user) {
-            
         }
     </script>
 {% endblock %}
+
+

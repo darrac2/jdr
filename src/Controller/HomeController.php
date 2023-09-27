@@ -40,11 +40,14 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
-
+    #[Route('/message', name: 'app_message')]
     public function publish(HubInterface $hub): Response
     {
+        //form
+        
+        //new message
         $update = new Update(
-            'https://example.com/books/1',
+            'https://localhost/message/1',
             json_encode(['status' => 'OutOfStock'])
         );
 

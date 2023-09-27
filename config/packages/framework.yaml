@@ -4,8 +4,6 @@ framework:
     csrf_protection: ~
     http_method_override: false
     handle_all_throwables: true
-    
-    
     http_client:
         default_options:
             verify_peer: false
