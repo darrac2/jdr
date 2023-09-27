@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/list/amis')]
 class ListAmisController extends AbstractController
 {
-    #[Route('/', name: 'app_list_amis_index', methods: ['GET'])]
+    #[Route('/', name: 'app_list_amis_index', methods: ['GET', 'POST'])]
     public function index(ListAmisRepository $listAmisRepository,UserRepository $userRepository, ManagerRegistry $doctrine): Response
     {   
         //$repository = $doctrine->getRepository(User::class);
@@ -88,22 +88,37 @@ class ListAmisController extends AbstractController
         return $this->redirectToRoute('app_list_amis_index', [], Response::HTTP_SEE_OTHER);
 
     }
+
     #[Route('/{id}', name: 'app_list_amis_accepter', methods: ['GET', 'POST'])]
     public function validation(ListAmis $listAmi, EntityManagerInterface $entityManager )
     {
         
         $listAmi->setPending(true);
+        $entityManager->persist($listAmi);
         $entityManager->flush();
+        $idAmis = $listAmi->getIdUser();
+        $idUser = $listAmi->getIdAmis();
+        //creer new amis
+        $listAmi2 = new ListAmis();
+        //user
+        $listAmi2->setIdUser($idUser);
+        $listAmi2->setIdAmis($idAmis);
+        $listAmi2->setPending(1);
+        $entityManager->persist($listAmi2);
+        $entityManager->flush();
+        
         return $this->redirectToRoute('app_list_amis_index', [], Response::HTTP_SEE_OTHER);
 
     }
+    
+    
 
-
-    #[Route('/{id}', name: 'app_list_amis_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_list_amis_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, ListAmis $listAmi, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$listAmi->getId(), $request->request->get('_token'))) {
             $entityManager->remove($listAmi);
+            $entityManager->persist($listAmi);
             $entityManager->flush();
         }
 

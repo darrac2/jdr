@@ -7,20 +7,184 @@
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+<link href="assets/css/messages_chat_with_tabs.css" type="text/css" rel="stylesheet">
 
-<div class="example-wrapper">
-    <h1>test</h1>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    test mercure push de base :
+    <div class="example-wrapper" style="color:white;">
+        <h1>test</h1>
+
+        <p >test mercure push de base chat :</p>
+    </div>
+    <section>
+    <div class="container" style="background: rgb(52,52,57);">
+<div class="messaging">
+      <div class="inbox_msg">
+        <div class="inbox_people">
+          <div class="headind_srch">
+            <div class="recent_heading">
+              <h4>Messagerie</h4>
+            </div>
+            <div class="srch_bar">
+              <div class="stylish-input-group">
+                
+                <span class="input-group-addon">
+                <button type="button"> <i class='fas fa-user-plus'></i> </button>
+                </span> </div>
+            </div>
+          </div>
+          <div class="inbox_chat">
+          {% for amis in list_amis %}
+            <div class="chat_list " id="{{amis.id}}" >
+              <div class="chat_people">
+                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                <div class="chat_ib">
+                  <h5>{{amis.idAmis.pseudo}} <span class="chat_date">date</span></h5>
+                  <p>{{amis.idAmis.description}}</p>
+                </div>
+              </div>
+            </div>
+            
+          {% endfor %}
+            
+            
+            <div class="chat_list active_chat">
+              <div class="chat_people active_chat" data-toggle="tab" data-target="#inbox-message-2">
+                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                <div class="chat_ib">
+                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                  <p>Test, which is a new approach to have all solutions 
+                    astrology under one roof.</p>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <div class="mesgs">
+        {% for conversation in conversations %}
+            <div class="msg_history " id="#inbox-message-1">
+                <div class="incoming_msg">
+                <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                <div class="received_msg">
+                    <div class="received_withd_msg">
+                    <p>Test which is a new approach to have all
+                        solutions</p>
+                    <span class="time_date"> 11:01 AM    |    June 9</span></div>
+                </div>
+                </div>
+                <div class="outgoing_msg">
+                <div class="sent_msg">
+                    <p>Test which is a new approach to have all
+                    solutions</p>
+                    <span class="time_date"> 11:01 AM    |    June 9</span> </div>
+                </div>
+            </div>
+        {% endfor %}
+          <div class="msg_history active" id="#inbox-message-2">
+            <div class="incoming_msg">
+              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  <p>Test, which is a new approach to have</p>
+                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
+              </div>
+            </div>
+            <div class="outgoing_msg">
+              <div class="sent_msg">
+                <p>Apollo University, Delhi, India Test</p>
+                <span class="time_date"> 11:01 AM    |    Today</span> </div>
+            </div>
+            <div class="incoming_msg">
+              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  <p>We work directly with our designers and suppliers,
+                    and sell direct to you, which means quality, exclusive
+                    products, at a price anyone can afford.</p>
+                  <span class="time_date"> 11:01 AM    |    Today</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="msg_history" id="#inbox-message-2">
+            <div class="incoming_msg">
+              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  <p>Test </p>
+                  <span class="time_date"> 11:01 AM    |    June 9</span></div>
+              </div>
+            </div>
+            <div class="outgoing_msg">
+              <div class="sent_msg">
+                <p>Test which is a new approach to have all
+                  solutions</p>
+                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
+            </div>
+            <div class="incoming_msg">
+              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  <p>Test, which is a new approach to have</p>
+                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
+              </div>
+            </div>
+            <div class="outgoing_msg">
+              <div class="sent_msg">
+                <p>Apollo University, Delhi, India Test</p>
+                <span class="time_date"> 11:01 AM    |    Today</span> </div>
+            </div>
+            <div class="incoming_msg">
+              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  <p>We work directly with our designers and suppliers,
+                    and sell direct to you, which means quality, exclusive
+                    products, at a price anyone can afford.</p>
+                  <span class="time_date"> 11:01 AM    |    Today</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="type_msg">
+            <div class="input_msg_write">
+              <input type="text" class="write_msg" placeholder="Type a message" />
+              <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+    </div>
+    </div>
+</section>
 
 </div>
 {% endblock %}
 {% block javascripts %}
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        
+
+    </script>
     <script>
-        const eventSource = new EventSource("{{ mercure('https://localhost/books/1')|escape('js') }}");
+        //active default premiere conv
+
+        var elements = document.getElementsByClassName("chat_list");
+        console.log("Hello world!");
+        //console.log(elements);
+        const eventSource = new EventSource("{{ mercure('https://localhost/message/1')|escape('js') }}");
         eventSource.onmessage = event => {
             // Will be called every time an update is published by the server
             console.log(JSON.parse(event.data));
+        }
+        function activechat(user) {
+            
         }
     </script>
 {% endblock %}
