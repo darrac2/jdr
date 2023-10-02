@@ -73,48 +73,50 @@
             <div class="msg_history" id="inbox-message-{{messagebox.id}}">
                 
                 {% for message in conversations %}
-                {% if messagebox.idUser == message.userfirst or messagebox.idamis == message.userfirst %}
-                {% if messagebox.idUser == message.usersecond or messagebox.idamis == message.usersecond %}
-                  {% if  message.userfirst == app.user %}
-                    <div class="incoming_msg">
-                      <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                      <div class="received_msg">
-                          <div class="received_withd_msg">
-                          <p>{{message.message}}</p>
-                          <span class="time_date"> {{ message.date|date('Y-m-d H:i:s')}}</span></div>
+                {% if messagebox == message.listAmis %}
+                  {% if messagebox.idUser == message.userfirst or messagebox.idamis == message.userfirst %}
+                  {% if messagebox.idUser == message.usersecond or messagebox.idamis == message.usersecond %}
+                    {% if  message.userfirst == app.user %}
+                      <div class="incoming_msg">
+                        <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                        <div class="received_msg">
+                            <div class="received_withd_msg">
+                            <p>{{message.message}}</p>
+                            <span class="time_date"> {{ message.date|date('Y-m-d H:i:s')}}</span></div>
+                        </div>
                       </div>
-                    </div>
+                    {% endif %}
+                    {% if message.usersecond == app.user %}
+                      <div class="outgoing_msg">
+                          <div class="sent_msg">
+                          <p>{{message.message}}</p>
+                          <span class="time_date"> {{ message.date|date('Y-m-d H:i:s')}}</span> </div>
+                      </div>
+                    {% endif %}
+                  
                   {% endif %}
-                  {% if message.usersecond == app.user %}
-                    <div class="outgoing_msg">
-                        <div class="sent_msg">
-                        <p>{{message.message}}</p>
-                        <span class="time_date"> {{ message.date|date('Y-m-d H:i:s')}}</span> </div>
-                    </div>
                   {% endif %}
-                
                 {% endif %}
-                {% endif %}
+
                 
                 {% endfor %}
                 </div>
                 {% if messagebox.idUser == app.user %}
                   <div class="type_msg" id="form_msg_{{messagebox.id}}">
-                  <form class="input_msg_write" id="form">
+                  <div class="input_msg_write" id="form">
                     <input type="text" class="write_msg" placeholder="Type a message" id="message"/>
-                    <button class="msg_send_btn" hrefs="" onclick="senddata('{{ messagebox.idamis.id }}')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                  </form>
+                    <button class="msg_send_btn"  onclick="senddata('{{ messagebox.idamis.id }}', '{{messagebox.id}}', 'message')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                  </div>
                 </div>
                 {% endif %}
                 {% if messagebox.idamis == app.user %}
                   <div class="type_msg" id="form_msg_{{messagebox.id}}">
-                <form class="input_msg_write" id="form ">
-                  <input type="text" class="write_msg" placeholder="Type a message" id="message"/>
-                  <button class="msg_send_btn" href="" onclick="senddata('{{ messagebox.idUser.id }}')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                </form>
-              </div>
+                    <div class="input_msg_write" id="form ">
+                      <input type="text" class="write_msg" placeholder="Type a message" id="message2"/>
+                      <button class="msg_send_btn"  onclick="senddata('{{ messagebox.idUser.id }}', '{{messagebox.id}}', 'message2')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
                 {% endif %}
-            
             
         {% endfor %}
           
@@ -153,18 +155,131 @@
           var formmessagebox = document.getElementById("form_msg_"+id);
           
           formmessagebox.classList.add("active_msg");
+          //rendre messge visible et invisible
+          if(document.querySelector('.active_msginput') != null){
+            document.querySelector('.active_msginput').classList.remove("active_msginput");
+          }
+          //rendre messge visible et invisible
+          const elements = document.querySelectorAll('.input'+id);
+
+          elements.forEach((element) => {
+            element.classList.add('active_msginput');
+          });
         }
         //function submit
-                
-       
-/*
-        //creer la connection au serveur mercure
-        const eventSource = new EventSource("{{ mercure('https://localhost/message/1')|escape('js') }}");
-        eventSource.onmessage = event => {
-            // Will be called every time an update is published by the server
+            var url = "{{ app.request.schemeAndHttpHost }}";
+            function senddata(idamis, listamis, idmessage) {
 
-            console.log(JSON.parse(event.data));
-        }*/
+              var message = document.getElementById(idmessage).value;
+              // creer data json
+              data = {
+                  "iduser": "{{app.user.id}}",
+                  "idamis": idamis,
+                  "message": message,
+                  "list_amisid": listamis
+              };
+              console.log(data);
+              //envoyer la requete data
+              const xhr = new XMLHttpRequest();
+              xhr.open("POST", url+"/message");
+              xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+              const body = JSON.stringify(data);
+              xhr.onload = () => {
+              if (xhr.readyState == 4 && xhr.status == 201) {
+                console.log(JSON.parse(xhr.responseText));
+              } else {
+                console.log(`Error: ${xhr.status}`);
+              }
+            };
+            xhr.send(body);
+            //clear message value 
+            if (document.getElementById(idmessage).value != '') {
+                  document.getElementById(idmessage).value = "";
+              }
+            //get date now
+            const dateObj = new Date();
+
+            let year = dateObj.getFullYear();
+
+            let month = dateObj.getMonth();
+            month = ('0' + (month + 1)).slice(-2);
+            // To make sure the month always has 2-character-format. For example, 1 => 01, 2 => 02
+
+            let date = dateObj.getDate();
+            date = ('0' + date).slice(-2);
+            // To make sure the date always has 2-character-format
+
+            let hour = dateObj.getHours();
+            hour = ('0' + hour).slice(-2);
+            // To make sure the hour always has 2-character-format
+
+            let minute = dateObj.getMinutes();
+            minute = ('0' + minute).slice(-2);
+            // To make sure the minute always has 2-character-format
+
+            let second = dateObj.getSeconds();
+            second = ('0' + second).slice(-2);
+            // To make sure the second always has 2-character-format
+
+            const time = `${year}-${month}-${date} ${hour}:${minute}:${second}`;
+            //afficher affiche le message envoyer
+            const box = `<div class="incoming_msg input_`+listamis+` cacher active_msginput ">
+                        <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                        <div class="received_msg">
+                            <div class="received_withd_msg">
+                            <p>`+message+`</p>
+                            <span class="time_date">`+time+`</span></div>
+                        </div>
+                      </div>`;
+            //inserer dans div id = inbox-message-listamis
+            console.log(document.getElementById('inbox-message-'+listamis));
+            document.getElementById('inbox-message-'+listamis).insertAdjacentHTML('afterend', box);
+        }
+
+        //creer la connection au serveur mercure pour recevoir des messges
+        console.log('https://localhost/message/{{app.user.id}}');
+        const eventSource = new EventSource("{{ mercure('https://localhost/message/2')|escape('js') }}",{withCredentials: true});
+        eventSource.onmessage = event => {
+
+          const data = JSON.parse(event.data);
+          var message = data["message"];
+          var listamis = data["idListamis"];
+                      //get date now
+            const dateObj = new Date();
+
+            let year = dateObj.getFullYear();
+
+            let month = dateObj.getMonth();
+            month = ('0' + (month + 1)).slice(-2);
+            // To make sure the month always has 2-character-format. For example, 1 => 01, 2 => 02
+
+            let date = dateObj.getDate();
+            date = ('0' + date).slice(-2);
+            // To make sure the date always has 2-character-format
+
+            let hour = dateObj.getHours();
+            hour = ('0' + hour).slice(-2);
+            // To make sure the hour always has 2-character-format
+
+            let minute = dateObj.getMinutes();
+            minute = ('0' + minute).slice(-2);
+            // To make sure the minute always has 2-character-format
+
+            let second = dateObj.getSeconds();
+            second = ('0' + second).slice(-2);
+            // To make sure the second always has 2-character-format
+
+            const time = `${year}-${month}-${date} ${hour}:${minute}:${second}`;
+            // creer le html du messge
+            box =`<div class="outgoing_msg input_`+listamis+` cacher active_msginput">
+              <div class="sent_msg">
+              <p`+message+`p>
+              <span class="time_date">`+time+`</span> </div>
+            </div>`;
+            document.getElementById('inbox-message-'+listamis).insertAdjacentHTML('afterend', box);
+            //console.log(JSON.parse(event.data));
+        }
+
     </script>
 {% endblock %}
 

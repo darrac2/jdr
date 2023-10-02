@@ -63,6 +63,7 @@ img{ max-width:100%;}
 .incoming_msg_img {
   display: inline-block;
   width: 6%;
+  display: none;
 }
 .received_msg {
   display: inline-block;
@@ -100,7 +101,7 @@ img{ max-width:100%;}
   padding: 5px 10px 5px 12px;
   width:100%;
 }
-.outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
+.outgoing_msg{ overflow:hidden; margin:26px 0 26px; /*display: none;*/}
 .sent_msg {
   float: right;
   width: 46%;
@@ -133,9 +134,17 @@ img{ max-width:100%;}
 .messaging { padding: 0 0 50px 0;}
 .msg_history {
   height: 516px;
+  max-height: 516px;
   overflow-y: auto;
   display: none;
 }
 .active{
+  display: block;
+}
+.cacher{
+  display: none;
+}
+
+.active_msginput{
   display: contents;
 }
