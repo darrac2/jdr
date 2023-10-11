@@ -30,7 +30,7 @@ class Ressource
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
     private ?Category $category = null;
 
     #[ORM\Column(nullable: true)]

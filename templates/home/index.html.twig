@@ -20,9 +20,12 @@
 
         <p >test mercure push de base chat :</p>
     </div>
+  {% if list_amis is not defined%}
+
+    {% else%}
     <section>
     <div class="container" style="background: rgb(52,52,57);">
-<div class="messaging">
+    <div class="messaging">
       <div class="inbox_msg">
         <div class="inbox_people">
           <div class="headind_srch">
@@ -37,6 +40,7 @@
                 </span> </div>
             </div>
           </div>
+
           <div class="inbox_chat">
           {% for amis in list_amis %}
           {% if amis.idUser == app.user %}
@@ -122,11 +126,10 @@
           
         </div>
       </div>
-      
-      
     </div>
     </div>
-</section>
+  </section>
+  {% endif %}
 
 </div>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -237,8 +240,10 @@
         }
 
         //creer la connection au serveur mercure pour recevoir des messges
-        console.log('https://localhost/message/{{app.user.id}}');
-        const eventSource = new EventSource("{{ mercure('https://localhost/message/2')|escape('js') }}",{withCredentials: true});
+        console.log("{{ mercure('https://localhost/message/2')|escape('js') }}'");
+        
+        //const eventSource = new EventSource("{{ mercure('https://localhost/message/2')|escape('js') }}",{withCredentials: true});
+        const eventSource = new EventSource('https://localhost/.well-known/?topic=http://example.com/message/{{app.user.id}}');
         eventSource.onmessage = event => {
 
           const data = JSON.parse(event.data);

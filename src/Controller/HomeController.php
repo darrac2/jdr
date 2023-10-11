@@ -20,6 +20,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use SebastianBergmann\Template\Template;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends AbstractController
@@ -30,12 +31,13 @@ class HomeController extends AbstractController
         
         
         return $this->render('home/index.html.twig', [
-            'conversations' => $conversationRepository->findAll(),
-            'list_amis' => $listAmisRepository->findAll(),
-            'users' => $userRepository->findAll(),
+            //'conversations' => $conversationRepository->findAll(),
+            //'list_amis' => $listAmisRepository->findAll(),
+            //'users' => $userRepository->findAll(),
             'controller_name' => 'HomeController',
         ]);
     }
+
     #[Route('/message', name: 'app_message',methods: ['POST'])]
     public function publish(Request $request,ManagerRegistry $doctrine, EntityManagerInterface $entityManager, HubInterface $hub)
     {
