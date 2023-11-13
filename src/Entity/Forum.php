@@ -37,6 +37,9 @@ class Forum
     #[ORM\ManyToOne(inversedBy: 'forum', cascade: ['persist', 'remove'])]
     private ?User $User = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $liker = null;
+
     public function __construct()
     {
         $this->forumCommentaires = new ArrayCollection();
@@ -135,6 +138,18 @@ class Forum
     public function setUser(?User $User): static
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getLiker(): ?int
+    {
+        return $this->liker;
+    }
+
+    public function setLiker(?int $liker): static
+    {
+        $this->liker = $liker;
 
         return $this;
     }

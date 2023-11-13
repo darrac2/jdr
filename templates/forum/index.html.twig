@@ -3,37 +3,50 @@
 {% block title %}Forum index{% endblock %}
 
 {% block body %}
-    <h1>Forum index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Date_crea</th>
-                <th>Ordre</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for forume in forums %}
-            <tr>
-                <td>{{ forume.id }}</td>
-                <td>{{ forume.titre }}</td>
-                <td>{{ forume.description }}</td>
-                <td>{{ forume.dateCrea ? forume.dateCrea|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ forume.ordre }}</td>
-                <td>
-                    <a href="{{ path('app_forum_show', {'id': forume.id}) }}">show</a>
-                    <a href="{{ path('app_forum_edit', {'id': forume.id}) }}">edit</a>
-                </td>
-            </tr>
+<div class="col" style="text-align: center;">
+    <div style="height: 79px;margin: 18px;margin-bottom: -4px;">
+        <h1 style="margin: -14px;color: #ededed;text-align: center;margin-top: -14px;">DERNIER POST</h1>
+    </div>
+    {% for forume in forums %}
+        <div class="card" style="background: #212529;height: 110px;text-align: center;margin: auto;width: 969px;" href="{{ path('app_forum_show', {'id': forume.id}) }}">
+            <div class="card-body" style="height: 110px;text-align: center;">
+                <div class="row" style="height: 90px;">
+                    <div class="col-xl-2" style="width: 75px;height: 75px;margin-right: 10px;">
+                        <div style="height: 75px;padding-right: 0px;margin-right: 0px;width: 75px;"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="75" height="75" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-top: 0;margin-bottom: 0;margin-left: 0;margin-right: 0;height: 75px;width: 75px;" /></div>
+                    </div>
+                    <div class="col" style="height: 75px;">
+                        <div class="d-flex" style="margin-left: 0px;width: 105%;height: 46px;">
+                            <div class="row" style="width: 95%;height: 75px;">
+                                <div class="col-2 col-xl-9" style="width: 70%;height: 75px;">
+                                    <div>
+                                        <p class="fw-bold mb-0" style="margin-bottom: 0px;margin-top: 0px;color: #ededed;margin-left: 6px;font-size: 24px;text-align: left;">{{ forume.titre }}</p>
+                                        <p class="text-muted mb-0" style="margin-bottom: 0;padding-top: 0px;margin-top: 0;color: var(--bs-body-bg);--bs-body-color: var(--bs-body-bg);margin-left: 6px;text-align: left;"><span style="color: rgb(255, 255, 255);">{{ forume.description }}</span></p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2" style="width: 15%;padding-right: 0px;padding-left: 0;">
+                                    <p style="color: #ededed;text-align: right;margin-left: 1px;margin-right: -31px;">{{ forume.user.pseudo }}</p>
+                                    <p style="font-size: 20px;margin-bottom: 0;margin-top: 0;color: #ededed;margin-left: 0px;text-align: right;padding-top: 7px;padding-left: 0px;padding-right: 0px;margin-right: -104px;">{{ forume.liker }}</p>
+                                </div>
+                                <div class="col" style="width: 15%;padding-right: 0;padding-left: 0;">
+                                    <p style="color: #ededed;text-align: right;">{{ forume.dateCrea ? forume.dateCrea|date('Y-m-d') : '' }}</p><img src="/assets/img/heart.svg" style="height: 34px;border-style: none;filter: invert(91%);margin-left: 115px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {% else %}
             <tr>
                 <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
+    
+
+</div>
+    <table class="table">
+        <tbody>
+        
 
         </tbody>
     </table>

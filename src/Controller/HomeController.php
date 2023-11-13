@@ -22,11 +22,12 @@ use SebastianBergmann\Template\Template;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\RessourceRepository;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(ListAmisRepository $listAmisRepository ,UserRepository $userRepository,ConversationRepository $conversationRepository, ManagerRegistry $doctrine): Response
+    public function index(ListAmisRepository $listAmisRepository, RessourceRepository $ressourceRepository ,UserRepository $userRepository,ConversationRepository $conversationRepository, ManagerRegistry $doctrine): Response
     {
         
         
@@ -34,6 +35,7 @@ class HomeController extends AbstractController
             //'conversations' => $conversationRepository->findAll(),
             //'list_amis' => $listAmisRepository->findAll(),
             //'users' => $userRepository->findAll(),
+            'ressources' => $ressourceRepository->findAll(),
             'controller_name' => 'HomeController',
         ]);
     }
