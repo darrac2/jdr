@@ -15,275 +15,110 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <div class="example-wrapper" style="color:white;">
-        <h1>test</h1>
-
-        <p >test mercure push de base chat :</p>
-    </div>
-  {% if list_amis is not defined%}
-
-    {% else%}
-    <section>
-    <div class="container" style="background: rgb(52,52,57);">
-    <div class="messaging">
-      <div class="inbox_msg">
-        <div class="inbox_people">
-          <div class="headind_srch">
-            <div class="recent_heading">
-              <h4>Messagerie</h4>
+      <div class="container py-4 py-xl-5">
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 style="color: #ededed;">Top de la semaine</h2>
             </div>
-            <div class="srch_bar">
-              <div class="stylish-input-group">
-                
-                <span class="input-group-addon">
-                <button type="button"> <i class='fas fa-user-plus'></i> </button>
-                </span> </div>
-            </div>
-          </div>
-
-          <div class="inbox_chat">
-          {% for amis in list_amis %}
-          {% if amis.idUser == app.user %}
-            <div class="chat_list" style="cursor: pointer;" id="{{amis.id}}" onclick="active('{{amis.id}}')">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>{{amis.idAmis.pseudo}} <span class="chat_date">date</span></h5>
-                  <p>{{amis.idAmis.description}}</p>
-                </div>
-              </div>
-            </div>
-          {% endif %}
-          {% if amis.idAmis == app.user %}
-            <div class="chat_list" style="cursor: pointer;" id="{{amis.id}}" onclick="active('{{amis.id}}')">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>{{amis.idUser.pseudo}} <span class="chat_date">date</span></h5>
-                  <p>{{amis.idUser.description}}</p>
-                </div>
-              </div>
-            </div>
-          {% endif %}
-            
-            
-          {% endfor %}
-            
-          </div>
         </div>
-        <div class="mesgs">
-        {% set count = 0 %}
-        {% for messagebox in list_amis %}
-            <div class="msg_history" id="inbox-message-{{messagebox.id}}">
-                
-                {% for message in conversations %}
-                {% if messagebox == message.listAmis %}
-                  {% if messagebox.idUser == message.userfirst or messagebox.idamis == message.userfirst %}
-                  {% if messagebox.idUser == message.usersecond or messagebox.idamis == message.usersecond %}
-                    {% if  message.userfirst == app.user %}
-                      <div class="incoming_msg">
-                        <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                        <div class="received_msg">
-                            <div class="received_withd_msg">
-                            <p>{{message.message}}</p>
-                            <span class="time_date"> {{ message.date|date('Y-m-d H:i:s')}}</span></div>
+        <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+            {% set count = 0 %}
+            {% for ressouce in ressources %}
+            {% if count < 3 %}
+              <div class="col">
+                <div class="card" style="background: #212529;"><img class="card-img-top w-100 d-block fit-cover" style="height: 350px;" src="{{ ressouce.image }}" width="354" height="200">
+                    <div class="card-body p-4" style="height: 120px;padding: 24px;padding-top: 0px;color: #212529;background: #212529;">
+                        <p class="text-primary card-text mb-0" style="margin-top: -22px;margin-left: -14px;padding-left: 3px;"> {{ ressouce.category.name }} </p>
+                        <h4 class="card-title" style="text-align: left;padding-bottom: 3px;padding-left: 20px;padding-top: 3px;margin-left: 34px;margin-bottom: 10px;margin-top: 0px;color: #ededed;"> {{ ressouce.titre }} </h4>
+                        <div class="d-flex" style="margin-left: 0px;width: 105%;height: 46px;"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-top:-17px;margin-bottom:-6px;margin-left:-13px;margin-right:0px;">
+                            <div class="row" style="width: 95%;">
+                                <div class="col-2" style="width: 70%;min-width: 150px;">
+                                    <div>
+                                        <p class="text-muted mb-0" style="margin-bottom:-4px;padding-top:0px;margin-top:-2px;color:var(--bs-body-bg);--bs-body-color:var(--bs-body-bg);"><span style="color: rgb(255, 255, 255);">{{ ressouce.user.pseudo }}</span></p>
+                                    </div>
+                                </div>
+                                <div class="col" style="width: 15%;padding-right: 0px;padding-left: 0;">
+                                    <p style="font-size:20px;margin-bottom:2px;margin-top:1px;padding-top:0px;color:#ededed;margin-left:3px;"> {{ ressouce.liker }} </p>
+                                </div>
+                                <div class="col" style="width: 15%;padding-right: 0;padding-left: 0;"><img src="/assets/img/heart.svg?h=65a678a1eb8f9eace638764dce91d2bf" style="height:34px;border-style:none;margin-left:1px;filter:invert(91%);"></div>
+                            </div>
+                            <div style="width: 13.3438px;display: grid;position: relative;transform: translate(142px);height: 54px;padding: 1px;padding-right: 24px;"></div>
                         </div>
-                      </div>
-                    {% endif %}
-                    {% if message.usersecond == app.user %}
-                      <div class="outgoing_msg">
-                          <div class="sent_msg">
-                          <p>{{message.message}}</p>
-                          <span class="time_date"> {{ message.date|date('Y-m-d H:i:s')}}</span> </div>
-                      </div>
-                    {% endif %}
-                  
-                  {% endif %}
-                  {% endif %}
-                {% endif %}
-
-                
-                {% endfor %}
-                </div>
-                {% if messagebox.idUser == app.user %}
-                  <div class="type_msg" id="form_msg_{{messagebox.id}}">
-                  <div class="input_msg_write" id="form">
-                    <input type="text" class="write_msg" placeholder="Type a message" id="message"/>
-                    <button class="msg_send_btn"  onclick="senddata('{{ messagebox.idamis.id }}', '{{messagebox.id}}', 'message')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                  </div>
-                </div>
-                {% endif %}
-                {% if messagebox.idamis == app.user %}
-                  <div class="type_msg" id="form_msg_{{messagebox.id}}">
-                    <div class="input_msg_write" id="form ">
-                      <input type="text" class="write_msg" placeholder="Type a message" id="message2"/>
-                      <button class="msg_send_btn"  onclick="senddata('{{ messagebox.idUser.id }}', '{{messagebox.id}}', 'message2')"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                     </div>
-                  </div>
-                {% endif %}
-            
-        {% endfor %}
-          
+                </div>
+            </div>
+            {% endif %}
+            {% set count = count + 1 %}
+          {% endfor %}
+            {% if count > 3  %}
+              <div class="col">
+              </div>
+            {% endif %}
+              
         </div>
-      </div>
     </div>
-    </div>
-  </section>
-  {% endif %}
-
-</div>
+    <section style="height: 806.391px;" class="pb-lg-0 mb-lg-0 mb-xl-0 mt-xl-0">
+        <div class="container" style="height: 799.391px;">
+            <div class="row" style="height: 67.5938px;">
+                <div class="col" style="height: 71.5938px;">
+                    <h1 style="text-align: center;font-size: 28px;height: 33.5938px;color: #ededed;">Actualités</h1>
+                </div>
+            </div>
+            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+                <div class="col">
+                    <div class="card" style="background: #212529;"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                        <div class="card-body p-4">
+                            <h4 class="card-title" style="color: #ededed;">Lorem libero donec</h4>
+                            <p class="card-text" style="color: #ededed;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                            <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                                <div>
+                                    <p class="fw-bold mb-0" style="color: #ededed;">John Smith</p>
+                                    <p style="color: #ededed;">Titre</p>
+                                </div>
+                                <p style="color: #ededed;padding-left: 70px;padding-top: 25px;">00/00/0000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="background: #212529;"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                        <div class="card-body p-4">
+                            <h4 class="card-title" style="color: #ededed;">Lorem libero donec</h4>
+                            <p class="card-text" style="color: #ededed;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                            <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                                <div>
+                                    <p class="fw-bold mb-0" style="color: #ededed;">John Smith</p>
+                                    <p class="text-muted mb-0"></p>
+                                    <p style="color: #ededed;">Titre</p>
+                                </div>
+                                <p style="color: #ededed;padding-left: 70px;padding-top: 25px;">00/00/0000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="background: #212529;"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                        <div class="card-body p-4">
+                            <h4 class="card-title" style="color: #ededed;">Lorem libero donec</h4>
+                            <p class="card-text" style="color: #ededed;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
+                            <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                                <div>
+                                    <p class="fw-bold mb-0" style="color: #ededed;">John Smith</p>
+                                    <p style="color: #ededed;">Titre</p>
+                                </div>
+                                <p style="color: #ededed;padding-left: 70px;padding-top: 25px;">00/00/0000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         
-        //active default premiere conv
-        function active(id) {
-
-          //get element by class if existe
-          if(document.querySelector('.active_chat') != null){
-            document.querySelector('.active_chat').classList.remove("active_chat");
-          }
-          var element = document.getElementById(id);
-          element.classList.add("active_chat");
-          var messagebox = document.getElementById("inbox-message-"+id);
-          
-          if(document.querySelector('.active') != null){
-            document.querySelector('.active').classList.remove("active");
-          }
-          messagebox.classList.add("active");
-          
-          if(document.querySelector('.active_msg') != null){
-            document.querySelector('.active_msg').classList.remove("active_msg");
-          }
-          var formmessagebox = document.getElementById("form_msg_"+id);
-          
-          formmessagebox.classList.add("active_msg");
-          //rendre messge visible et invisible
-          if(document.querySelector('.active_msginput') != null){
-            document.querySelector('.active_msginput').classList.remove("active_msginput");
-          }
-          //rendre messge visible et invisible
-          const elements = document.querySelectorAll('.input'+id);
-
-          elements.forEach((element) => {
-            element.classList.add('active_msginput');
-          });
-        }
-        //function submit
-            var url = "{{ app.request.schemeAndHttpHost }}";
-            function senddata(idamis, listamis, idmessage) {
-
-              var message = document.getElementById(idmessage).value;
-              // creer data json
-              data = {
-                  "iduser": "{{app.user.id}}",
-                  "idamis": idamis,
-                  "message": message,
-                  "list_amisid": listamis
-              };
-              console.log(data);
-              //envoyer la requete data
-              const xhr = new XMLHttpRequest();
-              xhr.open("POST", url+"/message");
-              xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-              const body = JSON.stringify(data);
-              xhr.onload = () => {
-              if (xhr.readyState == 4 && xhr.status == 201) {
-                console.log(JSON.parse(xhr.responseText));
-              } else {
-                console.log(`Error: ${xhr.status}`);
-              }
-            };
-            xhr.send(body);
-            //clear message value 
-            if (document.getElementById(idmessage).value != '') {
-                  document.getElementById(idmessage).value = "";
-              }
-            //get date now
-            const dateObj = new Date();
-
-            let year = dateObj.getFullYear();
-
-            let month = dateObj.getMonth();
-            month = ('0' + (month + 1)).slice(-2);
-            // To make sure the month always has 2-character-format. For example, 1 => 01, 2 => 02
-
-            let date = dateObj.getDate();
-            date = ('0' + date).slice(-2);
-            // To make sure the date always has 2-character-format
-
-            let hour = dateObj.getHours();
-            hour = ('0' + hour).slice(-2);
-            // To make sure the hour always has 2-character-format
-
-            let minute = dateObj.getMinutes();
-            minute = ('0' + minute).slice(-2);
-            // To make sure the minute always has 2-character-format
-
-            let second = dateObj.getSeconds();
-            second = ('0' + second).slice(-2);
-            // To make sure the second always has 2-character-format
-
-            const time = `${year}-${month}-${date} ${hour}:${minute}:${second}`;
-            //afficher affiche le message envoyer
-            const box = `<div class="incoming_msg input_`+listamis+` cacher active_msginput ">
-                        <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                        <div class="received_msg">
-                            <div class="received_withd_msg">
-                            <p>`+message+`</p>
-                            <span class="time_date">`+time+`</span></div>
-                        </div>
-                      </div>`;
-            //inserer dans div id = inbox-message-listamis
-            console.log(document.getElementById('inbox-message-'+listamis));
-            document.getElementById('inbox-message-'+listamis).insertAdjacentHTML('afterend', box);
-        }
-
-        //creer la connection au serveur mercure pour recevoir des messges
-        console.log("{{ mercure('https://localhost/message/2')|escape('js') }}'");
         
-        //const eventSource = new EventSource("{{ mercure('https://localhost/message/2')|escape('js') }}",{withCredentials: true});
-        const eventSource = new EventSource('https://localhost/.well-known/?topic=http://example.com/message/{{app.user.id}}');
-        eventSource.onmessage = event => {
-
-          const data = JSON.parse(event.data);
-          var message = data["message"];
-          var listamis = data["idListamis"];
-                      //get date now
-            const dateObj = new Date();
-
-            let year = dateObj.getFullYear();
-
-            let month = dateObj.getMonth();
-            month = ('0' + (month + 1)).slice(-2);
-            // To make sure the month always has 2-character-format. For example, 1 => 01, 2 => 02
-
-            let date = dateObj.getDate();
-            date = ('0' + date).slice(-2);
-            // To make sure the date always has 2-character-format
-
-            let hour = dateObj.getHours();
-            hour = ('0' + hour).slice(-2);
-            // To make sure the hour always has 2-character-format
-
-            let minute = dateObj.getMinutes();
-            minute = ('0' + minute).slice(-2);
-            // To make sure the minute always has 2-character-format
-
-            let second = dateObj.getSeconds();
-            second = ('0' + second).slice(-2);
-            // To make sure the second always has 2-character-format
-
-            const time = `${year}-${month}-${date} ${hour}:${minute}:${second}`;
-            // creer le html du messge
-            box =`<div class="outgoing_msg input_`+listamis+` cacher active_msginput">
-              <div class="sent_msg">
-              <p`+message+`p>
-              <span class="time_date">`+time+`</span> </div>
-            </div>`;
-            document.getElementById('inbox-message-'+listamis).insertAdjacentHTML('afterend', box);
-            //console.log(JSON.parse(event.data));
-        }
 
     </script>
 {% endblock %}
