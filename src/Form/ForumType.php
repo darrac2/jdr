@@ -13,7 +13,7 @@ class ForumType extends AbstractType
     {
         $builder
             ->add('titre')
-            ->add('description')
+            ->add('description', null, ['required' => false])
 
         ;
     }

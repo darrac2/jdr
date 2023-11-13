@@ -18,9 +18,9 @@
                         <div class="d-flex" style="margin-left: 0px;width: 105%;height: 46px;">
                             <div class="row" style="width: 95%;height: 75px;">
                                 <div class="col-2 col-xl-9" style="width: 70%;height: 75px;">
-                                    <div>
+                                    <div style="color : white; float: left;">
                                         <p class="fw-bold mb-0" style="margin-bottom: 0px;margin-top: 0px;color: #ededed;margin-left: 6px;font-size: 24px;text-align: left;">{{ forume.titre }}</p>
-                                        <p class="text-muted mb-0" style="margin-bottom: 0;padding-top: 0px;margin-top: 0;color: var(--bs-body-bg);--bs-body-color: var(--bs-body-bg);margin-left: 6px;text-align: left;"><span style="color: rgb(255, 255, 255);">{{ forume.description }}</span></p>
+                                        <p class="text-muted mb-0" style="margin-bottom: 0;padding-top: 0px;margin-top: 0;color: var(--bs-body-bg);--bs-body-color: var(--bs-body-bg);margin-left: 6px;text-align: left;"><span class="text-editer" style="color: rgb(255, 255, 255);">{{ forume.description | raw }}</span></p>
                                     </div>
                                 </div>
                                 <div class="col-xl-2" style="width: 15%;padding-right: 0px;padding-left: 0;">
@@ -44,11 +44,13 @@
     
 
 </div>
-    <table class="table">
-        <tbody>
-        
-
-        </tbody>
-    </table>
     {{ include('forum/_form.html.twig') }}
+
+    <script type="text/javascript">
+        document.querySelectorAll('.text-editer').forEach(
+            var text = parseHTML($(this).innerHTML);
+            $(this).innerHTML = text;
+
+        )
+    </script>
 {% endblock %}
