@@ -62,12 +62,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'userfirst', targetEntity: Conversation::class)]
     private Collection $conversations;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Actualite::class)]
+    private Collection $actualites;
+
 
 
     public function __construct()
     {
         $this->listAmis = new ArrayCollection();
         $this->conversations = new ArrayCollection();
+        $this->actualites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -319,6 +323,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function isIsVerified(): ?bool
     {
         return $this->isVerified;
+    }
+
+    /**
+     * @return Collection<int, Actualite>
+     */
+    public function getActualites(): Collection
+    {
+        return $this->actualites;
+    }
+
+    public function addActualite(Actualite $actualite): static
+    {
+        if (!$this->actualites->contains($actualite)) {
+            $this->actualites->add($actualite);
+            $actualite->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActualite(Actualite $actualite): static
+    {
+        if ($this->actualites->removeElement($actualite)) {
+            // set the owning side to null (unless already changed)
+            if ($actualite->getUser() === $this) {
+                $actualite->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
 

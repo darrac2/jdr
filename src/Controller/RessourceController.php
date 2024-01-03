@@ -54,7 +54,7 @@ class RessourceController extends AbstractController
                     //creer dosier user if d'ont exist
                     $userid = $user->getId(); 
                     $source = $this->getParameter("data_directory");
-                    $url = $source."/".$userid."/ressourse";
+                    $url = "/data/".$userid."/ressourse";
                     if (file_exists( $url) == false){
                         mkdir($url, 0770, true );
                     }
@@ -81,7 +81,7 @@ class RessourceController extends AbstractController
                     //creer dosier user if d'ont exist
                     $userid = $user->getId(); 
                     $source = $this->getParameter("data_directory");
-                    $url = $source."/".$userid."/ressourse";
+                    $url = "/data/".$userid."/ressourse";
                     if (file_exists( $url) == false){
                         mkdir($url, 0770, true );
                     }

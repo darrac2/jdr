@@ -25,7 +25,7 @@
             {% set count = 0 %}
             {% for ressouce in ressources %}
             {% if count < 3 %}
-              <div class="col">
+              <div class="col-4">
                 <div class="card" style="background: #212529;"><img class="card-img-top w-100 d-block fit-cover" style="height: 350px;" src="{{ ressouce.image }}" width="354" height="200">
                     <div class="card-body p-4" style="height: 120px;padding: 24px;padding-top: 0px;color: #212529;background: #212529;">
                         <p class="text-primary card-text mb-0" style="margin-top: -22px;margin-left: -14px;padding-left: 3px;"> {{ ressouce.category.name }} </p>
@@ -47,13 +47,13 @@
                     </div>
                 </div>
             </div>
+            
+            {% else %}
+            <div class="col"></div>
             {% endif %}
+            
             {% set count = count + 1 %}
           {% endfor %}
-            {% if count > 3  %}
-              <div class="col">
-              </div>
-            {% endif %}
               
         </div>
     </div>

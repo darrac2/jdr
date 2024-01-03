@@ -1,0 +1,8 @@
+.link-card{
+    color: white;
+    text-decoration: none;
+    z-index: 100;
+}
+.card:hover {
+    cursor: pointer;
+  }

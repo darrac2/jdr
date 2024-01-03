@@ -3,12 +3,16 @@
 {% block title %}Forum index{% endblock %}
 
 {% block body %}
+<link rel="stylesheet" href="/assets/css/stylesforum.css">
+<section style="margin-bottom: 165px;">
+
 <div class="col" style="text-align: center;">
     <div style="height: 79px;margin: 18px;margin-bottom: -4px;">
         <h1 style="margin: -14px;color: #ededed;text-align: center;margin-top: -14px;">DERNIER POST</h1>
     </div>
     {% for forume in forums %}
-        <div class="card" style="background: #212529;height: 110px;text-align: center;margin: auto;width: 969px;" href="{{ path('app_forum_show', {'id': forume.id}) }}">
+        
+        <div class="card"  style="background: #212529;height: 110px;text-align: center;margin: auto;width: 969px; margin-bottom : 10px" href="{{ path('app_forum_show', {'id': forume.id}) }}">
             <div class="card-body" style="height: 110px;text-align: center;">
                 <div class="row" style="height: 90px;">
                     <div class="col-xl-2" style="width: 75px;height: 75px;margin-right: 10px;">
@@ -17,10 +21,10 @@
                     <div class="col" style="height: 75px;">
                         <div class="d-flex" style="margin-left: 0px;width: 105%;height: 46px;">
                             <div class="row" style="width: 95%;height: 75px;">
-                                <div class="col-2 col-xl-9" style="width: 70%;height: 75px;">
-                                    <div style="color : white; float: left;">
-                                        <p class="fw-bold mb-0" style="margin-bottom: 0px;margin-top: 0px;color: #ededed;margin-left: 6px;font-size: 24px;text-align: left;">{{ forume.titre }}</p>
-                                        <p class="text-muted mb-0" style="margin-bottom: 0;padding-top: 0px;margin-top: 0;color: var(--bs-body-bg);--bs-body-color: var(--bs-body-bg);margin-left: 6px;text-align: left;"><span class="text-editer" style="color: rgb(255, 255, 255);">{{ forume.description | raw }}</span></p>
+                                <div class="col-2 col-xl-9 text-truncate" style="width: 70%;height: 75px;" onclick="cardclick('https://127.0.0.1:8000{{ path('app_forum_show', {'id': forume.id}) }}')">
+                                    <div class="" style="color : white; float: left;">
+                                        <p class="fw-bold mb-0" style="margin-bottom: 0px;margin-top: 0px;color: #ededed;margin-left: 6px;font-size: 24px;text-align: left;"><a class="link-card" href="{{ path('app_forum_show', {'id': forume.id}) }}">{{ forume.titre }}</a></p>
+                                        <p class="text-muted mb-0" style="margin-bottom: 0;padding-top: 0px;margin-top: 0;color: var(--bs-body-bg);--bs-body-color: var(--bs-body-bg);margin-left: 6px;text-align: left;"><span class="text-editer " style="color: rgb(255, 255, 255);">{{ forume.description | raw }}</span></p>
                                     </div>
                                 </div>
                                 <div class="col-xl-2" style="width: 15%;padding-right: 0px;padding-left: 0;">
@@ -36,6 +40,7 @@
                 </div>
             </div>
         </div>
+        </div>
         {% else %}
             <tr>
                 <td colspan="7">no records found</td>
@@ -44,13 +49,17 @@
     
 
 </div>
-    {{ include('forum/_form.html.twig') }}
 
+    {{ include('forum/_form.html.twig') }}
+</section>
     <script type="text/javascript">
         document.querySelectorAll('.text-editer').forEach(
-            var text = parseHTML($(this).innerHTML);
+            text = parseHTML($(this).innerHTML);
             $(this).innerHTML = text;
 
-        )
+        );
+        function cardclick(url) {
+            window.location.href= baseurl+url;
+        }
     </script>
 {% endblock %}
