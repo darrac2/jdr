@@ -1,45 +1,43 @@
-{% extends 'base.html.twig' %}
+     {% extends 'base.html.twig' %}
 
-{% block title %}Ressource index{% endblock %}
+{% block title %}Catalogue{% endblock %}
 
-{% block body %}
-    <h1>Ressource index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titre</th>
-                <th>Fichier</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Status</th>
-                <th>Private</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for ressource in ressources %}
-            <tr>
-                <td>{{ ressource.id }}</td>
-                <td>{{ ressource.titre }}</td>
-                <td>{{ ressource.fichier }}</td>
-                <td>{{ ressource.description }}</td>
-                <td>{{ ressource.image }}</td>
-                <td>{{ ressource.status }}</td>
-                <td>{{ ressource.private }}</td>
-                <td>
-                    <a href="{{ path('app_ressource_show', {'id': ressource.id}) }}">show</a>
-                    <a href="{{ path('app_ressource_edit', {'id': ressource.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_ressource_new') }}">Create new</a>
-{% endblock %}
+{% block body %} 
+    <section>
+      <div class="container py-4 py-xl-5">
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2 style="color: #ededed;">Top de la semaine</h2>
+            </div>
+        </div>
+        <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+            {% for ressouce in ressources %}
+              <div class="col-4">
+                <div class="card" style="background: #212529;"><a href="{{ path('app_ressource_show', {'id': ressouce.id}) }}"><img class="card-img-top w-100 d-block fit-cover" style="height: 350px;" src="{{ ressouce.image }}" width="354" height="200"></a>
+                    <div class="card-body p-4" style="height: 120px;padding: 24px;padding-top: 0px;color: #212529;background: #212529;">
+                        <p class="text-primary card-text mb-0" style="margin-top: -22px;margin-left: -14px;padding-left: 3px;"> {{ ressouce.category.name }} </p>
+                        <h4 class="card-title" style="text-align: left;padding-bottom: 3px;padding-left: 20px;padding-top: 3px;margin-left: 34px;margin-bottom: 10px;margin-top: 0px;color: #ededed;"> {{ ressouce.titre }} </h4>
+                        <div class="d-flex" style="margin-left: 0px;width: 105%;height: 46px;"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-top:-17px;margin-bottom:-6px;margin-left:-13px;margin-right:0px;">
+                            <div class="row" style="width: 95%;">
+                                <div class="col-2" style="width: 70%;min-width: 150px;">
+                                    <div>
+                                        <p class="text-muted mb-0" style="margin-bottom:-4px;padding-top:0px;margin-top:-2px;color:var(--bs-body-bg);--bs-body-color:var(--bs-body-bg);"><span style="color: rgb(255, 255, 255);">{{ ressouce.user.pseudo }}</span></p>
+                                    </div>
+                                </div>
+                                <div class="col" style="width: 15%;padding-right: 0px;padding-left: 0;">
+                                    <p style="font-size:20px;margin-bottom:2px;margin-top:1px;padding-top:0px;color:#ededed;margin-left:3px;"> {{ ressouce.liker }} </p>
+                                </div>
+                                <div class="col" style="width: 15%;padding-right: 0;padding-left: 0;"><img src="/assets/img/heart.svg?h=65a678a1eb8f9eace638764dce91d2bf" style="height:34px;border-style:none;margin-left:1px;filter:invert(91%);"></div>
+                            </div>
+                            <div style="width: 13.3438px;display: grid;position: relative;transform: translate(142px);height: 54px;padding: 1px;padding-right: 24px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+          {% endfor %}
+              
+        </div>
+      </div>
+    </section>
+    {% endblock %}

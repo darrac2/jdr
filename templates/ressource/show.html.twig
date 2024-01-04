@@ -3,44 +3,21 @@
 {% block title %}Ressource{% endblock %}
 
 {% block body %}
-    <h1>Ressource</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ ressource.id }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ ressource.titre }}</td>
-            </tr>
-            <tr>
-                <th>Fichier</th>
-                <td>{{ ressource.fichier }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ ressource.description }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ ressource.image }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ ressource.status }}</td>
-            </tr>
-            <tr>
-                <th>Private</th>
-                <td>{{ ressource.private }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_ressource_index') }}">back to list</a>
-
-    <a href="{{ path('app_ressource_edit', {'id': ressource.id}) }}">edit</a>
-
-    {{ include('ressource/_delete_form.html.twig') }}
+<section class="mb-5 pb-1" >
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8"><img width="100" height="80" style="width: 720px;height: 720px;" src="{{ ressource.image }}"/></div>
+            <div class="col">
+                <h1 style="color: #ededed;margin-bottom: 15px;margin-top: 10px;font-size: 38px;">{{ ressource.titre }}</h1>
+                <div style="background: #212529;border-radius: 8px;height: 468px;max-width: 356px;max-height: 468px;margin-bottom: 26px;">
+                    <p style="color: #ededed;padding-left: 15px;padding-top: 5px;padding-right: 15px;max-width: 421px;overflow: visible;word-wrap: break-word;max-height: 461px;">Description</p>
+                </div>
+                <div style="margin-bottom: 25px;">
+                    <div class="col-xl-2" style="width: 217px;"><a class="btn btn-primary ms-md-2" role="button" href="#" style="background: url('person.svg') no-repeat, #ededed;background-size: cover, auto;width: 55px;height: 55px;color: var(--bs-navbar-color);border-radius: 50px;padding-left: 6px;padding-top: 3px;padding-right: 4px;margin-top: 0px;margin-right: 10px;margin-left: 0px;border-width: 2px;border-color: #ededed;"></a><a href="#" style="color: #ededed;font-size: 24px;text-decoration: none;">Pseudo</a></div>
+                </div>
+                <div><button class="btn btn-primary" type="button" style="background: #212529;color: var(--bs-btn-bg);border-style: none;height: 45px;font-size: 20px;border-radius: 8px;width: 125px;">Télécharger</button></div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

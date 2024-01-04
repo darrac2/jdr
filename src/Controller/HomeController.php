@@ -5,9 +5,6 @@ namespace App\Controller;
 use App\Entity\Conversation;
 use App\Entity\ListAmis;
 use App\Entity\User;
-use App\Form\ConversationType;
-use App\Repository\ConversationRepository;
-use App\Repository\ListAmisRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,23 +15,27 @@ use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use SebastianBergmann\Template\Template;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\RessourceRepository;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(ListAmisRepository $listAmisRepository, RessourceRepository $ressourceRepository ,UserRepository $userRepository,ConversationRepository $conversationRepository, ManagerRegistry $doctrine): Response
+    public function index( RessourceRepository $ressourceRepository): Response
     {
         
         
         return $this->render('home/index.html.twig', [
-            //'conversations' => $conversationRepository->findAll(),
-            //'list_amis' => $listAmisRepository->findAll(),
-            //'users' => $userRepository->findAll(),
+            'ressources' => $ressourceRepository->findAll(),
+            'controller_name' => 'HomeController',
+        ]);
+    }
+    #[Route('/profile', name: 'app_profile')]
+    public function profile( RessourceRepository $ressourceRepository ,UserRepository $userRepository): Response
+    {
+ 
+        return $this->render('home/profile.html.twig', [
+            'users' => $userRepository->findAll(),
             'ressources' => $ressourceRepository->findAll(),
             'controller_name' => 'HomeController',
         ]);
