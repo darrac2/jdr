@@ -1,65 +1,106 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Forum index{% endblock %}
+{% block title %}Forum{% endblock %}
 
 {% block body %}
-<link rel="stylesheet" href="/assets/css/stylesforum.css">
-<section style="margin-bottom: 165px;">
-
-<div class="col" style="text-align: center;">
-    <div style="height: 79px;margin: 18px;margin-bottom: -4px;">
-        <h1 style="margin: -14px;color: #ededed;text-align: center;margin-top: -14px;">DERNIER POST</h1>
+<link rel="stylesheet" href="/assets/css/searchbar.css">
+<header>
+    <div class="container">
+        <div class="row" style="height: 100px;margin: 0px;width: initial;">
+            <div class="col" style="height: 100px;width: 992px;">
+                <div class="div-search">
+                <button class="btn btn-primary" type="button" style="color: #ededed;background: #212529;border-color: #212529;width: 200px;height: 50px;margin-right: 60px;margin-top: -5px;">RÉGLE DU FORUM ICI</button>
+                <img src="/assets/img/search.svg" class="img-search" /><input type="search" class="barre-search" id="searchBox" onkeyup="searchFunction()" onblur="cleanbar()" onfocus="activebar()" "Search.."/>
+                <ul id="myUL" class="z-index-2 position-relative">
+                {% for forum in forums %}
+                    <li><a class="searchable z-index-3" href="{{ path('app_forum_show', {'id': forum.id}) }}">{{ forum.titre }}</a></li>
+                {% endfor %}
+                </ul>
+                </div>
+            </div>
+        </div>
     </div>
-    {% for forume in forums %}
-        
-        <div class="card"  style="background: #212529;height: 110px;text-align: center;margin: auto;width: 969px; margin-bottom : 10px" href="{{ path('app_forum_show', {'id': forume.id}) }}">
-            <div class="card-body" style="height: 110px;text-align: center;">
-                <div class="row" style="height: 90px;">
-                    <div class="col-xl-2" style="width: 75px;height: 75px;margin-right: 10px;">
-                        <div style="height: 75px;padding-right: 0px;margin-right: 0px;width: 75px;"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="75" height="75" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-top: 0;margin-bottom: 0;margin-left: 0;margin-right: 0;height: 75px;width: 75px;" /></div>
-                    </div>
-                    <div class="col" style="height: 75px;">
-                        <div class="d-flex" style="margin-left: 0px;width: 105%;height: 46px;">
-                            <div class="row" style="width: 95%;height: 75px;">
-                                <div class="col-2 col-xl-9 text-truncate" style="width: 70%;height: 75px;" onclick="cardclick('https://127.0.0.1:8000{{ path('app_forum_show', {'id': forume.id}) }}')">
-                                    <div class="" style="color : white; float: left;">
-                                        <p class="fw-bold mb-0" style="margin-bottom: 0px;margin-top: 0px;color: #ededed;margin-left: 6px;font-size: 24px;text-align: left;"><a class="link-card" href="{{ path('app_forum_show', {'id': forume.id}) }}">{{ forume.titre }}</a></p>
-                                        <p class="text-muted mb-0" style="margin-bottom: 0;padding-top: 0px;margin-top: 0;color: var(--bs-body-bg);--bs-body-color: var(--bs-body-bg);margin-left: 6px;text-align: left;"><span class="text-editer " style="color: rgb(255, 255, 255);">{{ forume.description | raw }}</span></p>
+</header>
+<section>
+
+    <div class="col" style="text-align: center;">
+        <div style="height: 79px;margin: 18px;margin-bottom: -4px;">
+            <h1 style="margin: -14px;color: #ededed;text-align: center;margin-top: -14px;">DERNIER POST</h1>
+        </div>
+        {% for forume in forums %}
+            
+            <div class="card"  style="background: #212529;height: 110px;text-align: center;margin: auto;width: 969px; margin-bottom : 10px" href="{{ path('app_forum_show', {'id': forume.id}) }}">
+                <div class="card-body" style="height: 110px;text-align: center;">
+                    <div class="row" style="height: 90px;">
+                        <div class="col-xl-2" style="width: 75px;height: 75px;margin-right: 10px;">
+                            <div style="height: 75px;padding-right: 0px;margin-right: 0px;width: 75px;"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="75" height="75" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-top: 0;margin-bottom: 0;margin-left: 0;margin-right: 0;height: 75px;width: 75px;" /></div>
+                        </div>
+                        <div class="col" style="height: 75px;">
+                            <div class="d-flex" style="margin-left: 0px;width: 105%;height: 46px;">
+                                <div class="row" style="width: 95%;height: 75px;">
+                                    <div class="col-2 col-xl-9 text-truncate" style="width: 70%;height: 75px;" >
+                                        <div class="" style="color : white; float: left;">
+                                            <p class="fw-bold mb-0" style="margin-bottom: 0px;margin-top: 0px;color: #ededed;margin-left: 6px;font-size: 24px;text-align: left;"><a class="link-card" href="{{ path('app_forum_show', {'id': forume.id}) }}">{{ forume.titre }}</a></p>
+                                            <p class="text-muted mb-0" style="margin-bottom: 0;padding-top: 0px;margin-top: 0;color: var(--bs-body-bg);--bs-body-color: var(--bs-body-bg);margin-left: 6px;text-align: left;"><span class="text-editer " style="color: rgb(255, 255, 255);">{{ forume.description | raw }}</span></p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-xl-2" style="width: 15%;padding-right: 0px;padding-left: 0;">
-                                    <p style="color: #ededed;text-align: right;margin-left: 1px;margin-right: -31px;">{{ forume.user.pseudo }}</p>
-                                    <p style="font-size: 20px;margin-bottom: 0;margin-top: 0;color: #ededed;margin-left: 0px;text-align: right;padding-top: 7px;padding-left: 0px;padding-right: 0px;margin-right: -104px;">{{ forume.liker }}</p>
-                                </div>
-                                <div class="col" style="width: 15%;padding-right: 0;padding-left: 0;">
-                                    <p style="color: #ededed;text-align: right;">{{ forume.dateCrea ? forume.dateCrea|date('Y-m-d') : '' }}</p><img src="/assets/img/heart.svg" style="height: 34px;border-style: none;filter: invert(91%);margin-left: 115px;" />
+                                    <div class="col-xl-2" style="width: 15%;padding-right: 0px;padding-left: 0;">
+                                        <p style="color: #ededed;text-align: right;margin-left: 1px;margin-right: -31px;">{{ forume.user.pseudo }}</p>
+                                        <p style="font-size: 20px;margin-bottom: 0;margin-top: 0;color: #ededed;margin-left: 0px;text-align: right;padding-top: 7px;padding-left: 0px;padding-right: 0px;margin-right: -104px;">{{ forume.liker }}</p>
+                                    </div>
+                                    <div class="col" style="width: 15%;padding-right: 0;padding-left: 0;">
+                                        <p style="color: #ededed;text-align: right;">{{ forume.dateCrea ? forume.dateCrea|date('Y-m-d') : '' }}</p><img src="/assets/img/heart.svg" style="height: 34px;border-style: none;filter: invert(91%);margin-left: 115px;" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        </div>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-    
+            </div>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+        
 
-</div>
-
+    </div>
+    </section>
+    <section style="min-height: 600px;">
     {{ include('forum/_form.html.twig') }}
-</section>
-    <script type="text/javascript">
-        document.querySelectorAll('.text-editer').forEach(
-            text = parseHTML($(this).innerHTML);
-            $(this).innerHTML = text;
+    </section>
+    <script>
+        function activebar() {
+            if(document.getElementById("searchBox").value==''){
+                console.log("ok2");
+                document.getElementById("myUL").style.display = "block";
+            }
+        }
+        function cleanbar() {
+            console.log(document.getElementById("searchBox").value);
+            if(document.getElementById("searchBox").value==''){
+                console.log("ok");
+                document.getElementById("myUL").style.display = "none";
+            }
+        }
+        function searchFunction() {
+            let input = document.getElementById('searchBox').value;
+            input=input.toLowerCase();
+            let x = document.getElementsByClassName('searchable');
 
-        );
-        function cardclick(url) {
-            window.location.href= baseurl+url;
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                
+                    x[i].style.display="none";
+                    //disply list
+
+                
+                }
+                else {
+                x[i].style.display="list-item";    
+                }
+            }
         }
     </script>
 {% endblock %}

@@ -1,0 +1,60 @@
+input::placeholder{
+color: #ededed;
+}
+.registerpseudo{
+    width: 430px;
+    background: #1d1e1e;
+    border-radius: 10px;
+    color: #ededed;
+    margin: 0px;
+    margin-left: 122px;
+    text-align: left;
+}
+.registerpseudo::placeholder{
+   color: #ededed;
+}
+.password-field{
+    margin-top: 10px;
+    width: 430px;
+    background: #1d1e1e;
+    border-radius: 10px;
+    color: #ededed;
+    margin-left: 122px;
+    text-align: left;
+    height: 40px;
+}
+.password-field::placeholder{
+    color: #ededed;
+ }
+.registeremail{
+    margin-top: 10px;
+    width: 430px;
+    background: #1d1e1e;
+    border-radius: 10px;
+    color: #ededed;
+    margin-left: 122px;
+    text-align: left;
+}
+.registeremail::placeholder{
+    color: #ededed;
+ }
+.registerpassword{
+    width: 430px;
+    background: #1d1e1e;
+    border-radius: 10px;
+    color: #ededed;
+    margin-left: 122px;
+    text-align: left;
+}
+.registerpassword::placeholder{
+    color: #ededed;
+ }
+.registercheck{
+    text-align: center;
+    margin-left: 40px;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+.registercheck::placeholder{
+    color: #ededed;
+ }

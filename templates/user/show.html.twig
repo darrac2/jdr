@@ -8,21 +8,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
             <tr>
                 <th>Profil_image</th>
                 <td>{{ user.profilImage }}</td>
@@ -46,9 +31,71 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+    <header class="mb-5 pb-0" style="margin: 0px;padding: 0px;height: 1040px;">
+        <div class="container" style="margin-bottom: 0px;margin-top: 89px;background: #212529;border-radius: 6px;height: 151px;width: 800px;min-height: 151px;">
+            <div class="row">
+                <div class="col-xl-2" style="height: 150px;">
+                {% if user.profilImage == null  %}
+                    <a class="btn btn-primary ms-md-2" role="button" href="#" style="background: url('person.svg') no-repeat, #ededed;background-size: cover, auto;width: 100px;height: 100px;color: var(--bs-navbar-color);border-radius: 50px;padding-left: 6px;padding-top: 3px;padding-right: 4px;margin-top: 20px;margin-right: 0px;margin-left: 0px;border-width: 2px;border-color: #ededed;"></a>
+                {% else %}
+                <img class=""  src="{{ user.profilImage }}" style="background-size: cover, auto;width: 100px;height: 100px;color: var(--bs-navbar-color);border-radius: 50px;padding-left: 6px;padding-top: 3px;padding-right: 4px;margin-top: 20px;margin-right: 0px;margin-left: 0px;border-width: 2px;border-color: #ededed;"></img>
+                {% endif %}
+                </div>
+                <div class="col">
+                    <h2 class="" style="color: #ededed;margin-top: 10px;">{{ user.pseudo }}</h2>
+                    <p style="height: 123px;margin-top: 15px;color: #ededed;">{{ user.description |raw }} </p>
+                </div>
+            </div>
+
+        </div>
+        <div class="container" style="margin-bottom: 0px;margin-top: 89px;background: #212529;border-radius: 6px;height: 800px;width: 800px;min-height: 0px;">
+            <div class="row">
+                <div class="col">
+                    <p style="color: #ededed;text-align: center;font-size: 26px;margin-top: 13px;">VOTRE BIBLIOTHÈQUE</p>
+                </div>
+            </div>
+            <div class="row" style="height: 210px;">
+                <div class="col">
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" />
+                        <div style="border-radius: 5px;margin-top: -39px;background: #1d1e1e;opacity: 0.50;height: 39px;">
+                            <p style="color: #ededed;height: 40px;text-align: center;">Nom Ressource</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
+                </div>
+                <div class="col">
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
+                </div>
+            </div>
+            <div class="row" style="height: 210px;margin-top: 35px;">
+                <div class="col">
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
+                </div>
+                <div class="col">
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
+                </div>
+                <div class="col">
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
+                </div>
+            </div>
+            <div class="row" style="height: 210px;margin-top: 35px;">
+                <div class="col">
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
+                </div>
+                <div class="col">
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
+                </div>
+                <div class="col">
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
+                </div>
+            </div>
+        </div>
+    </header>
 
     <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

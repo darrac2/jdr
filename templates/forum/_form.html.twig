@@ -2,8 +2,6 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-        <title>TinyMCE WYSIWYG Bootstrap</title>
         
         <!-- TinyMCE CDN -->
         <script src="https://cdn.tiny.cloud/1/fshm918207nm613ps8dyr2qc8v1nz3fo6kjb0lm6ox12qb6b/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
@@ -13,7 +11,7 @@
             selector: 'textarea',
             skin: 'bootstrap',
             plugins: 'lists, link, image, media',
-            toolbar: 'h1 h2 bold italic underline strikethrough blockquote bullist numlist backcolor | link image media | removeformat',
+            toolbar: 'bold italic underline strikethrough blockquote bullist numlist backcolor | link image media | removeformat',
             menubar: false,
         });
         </script>
@@ -26,7 +24,7 @@
             </div>
         </div>
     </div>
-    <div style="color: white;S">
+    <div style="color: white;">
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
@@ -42,6 +40,7 @@
         e.stopImmediatePropagation();
     }
     });
+
 </script>
 <style>
     .tox .tox-split-button__chevron svg  {

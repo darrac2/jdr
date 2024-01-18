@@ -3,21 +3,51 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
+<link rel="stylesheet" href="/assets/css/stylesinput.css">
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-
-    <h1>Register</h1>
-
     {{ form_errors(registrationForm) }}
-
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+<header class="mb-5 pb-0" style="margin: 0px;padding: 0px;height: 473px;">
+    <div class="container" style="margin-bottom: 0px;margin-top: 89px;background: #212529;border-radius: 6px;height: 404px;width: 700px;">
+        <div class="row">
+            <div class="col">
+                <p style="color: #ededed;text-align: center;font-size: 30px;margin-top: 13px;">Inscription</p>
+                <div class="row">
+                    <div class="col" style="text-align: left;">
+                        {{ form_row(registrationForm.pseudo) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" style="text-align: left;">
+                        {{ form_row(registrationForm.email) }}
+                    </div>
+                </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                <div class="row">
+                    <div class="col" style="text-align: left;">
+                        {{ form_row(registrationForm.password, {
+                            label: ''
+                        }) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2" style="text-align: left;">
+                        {{ form_row(registrationForm.agreeTerms) }}
+                    </div>
+                    <div class="col-sm" style="margin-left: -30px;margin-right: 25px;color: #ededed;margin-top: 16px;border-radius: 10px;">  Accepter les <a href="#">Conditions d&#39;utilisation</a> et la <a href="#">Politique de confidentialité</a></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" style="text-align: center;"><input class="btn btn-primary" type="submit" value="S&#39;enregistrer" style="background: rgb(6,133,18);border-style: none;margin-top: 20px;" /></div>
+            </div>
+
+        {{ form_end(registrationForm) }}
+                    
+            </div>
+        </div>
+    </div>
+</header>
+
 {% endblock %}

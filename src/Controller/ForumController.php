@@ -88,7 +88,7 @@ class ForumController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_forum_show', methods: ['GET', 'POST'])]
-    public function show( ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager, Forum $forum): Response
+    public function show(ForumCommentaireRepository $forumCommentaireRepository, ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager, Forum $forum): Response
     {   
         //formulaire
         $forumCommentaire = new ForumCommentaire();
@@ -116,9 +116,15 @@ class ForumController extends AbstractController
                 'form' => $form,
             ], Response::HTTP_SEE_OTHER);
         }
+        //find reponse for forum
+        $forumCommentaire = $forumCommentaireRepository->findBy(
+            array("idForum" =>$forum) 
+        );
+
         return $this->render('forum/show.html.twig', [
             'forum' => $forum,
             'form' => $form,
+            'forum_commentaires' => $forumCommentaire,
         ]);
     }
 

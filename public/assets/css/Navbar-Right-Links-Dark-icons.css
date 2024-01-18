@@ -9,7 +9,6 @@
   height: calc(var(--bs-icon-size) * 2);
   color: var(--bs-primary);
 }
-
 .bs-icon-xs {
   --bs-icon-size: 1rem;
   width: calc(var(--bs-icon-size) * 1.5);

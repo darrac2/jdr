@@ -12,7 +12,8 @@ class ForumCommentaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('text')
+            ->add('text', null, ['required' => false,
+            'label' => false])
         ;
     }
 
@@ -20,6 +21,7 @@ class ForumCommentaireType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ForumCommentaire::class,
+            
         ]);
     }
 }

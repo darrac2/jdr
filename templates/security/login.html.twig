@@ -3,33 +3,66 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<form method="post">
+<link rel="stylesheet" href="/assets/css/stylesinput.css">
+<form style="text-align: left;" method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
     {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        <div class="mb-3" style="text-align:center; color : #ededed;padding-top: 15px;">
+            Vous êtes connecter en tant que  {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
         </div>
     {% endif %}
+    <header class="mb-5 pb-0" style="margin: 0px;padding: 0px;height: 473px;">
+        <div class="container" style="margin-bottom: 0px;margin-top: 89px;background: #212529;border-radius: 6px;height: 404px;width: 700px;">
+            <div class="row">
+                <div class="col">
+                    <p style="color: #ededed;text-align: center;font-size: 30px;margin-top: 13px;">Se connecter</p>
+                    
+                        <div class="row">
+                            <div class="col" style="text-align: left;">
+                            <label for="inputEmail" style="display:none;">Email</label>
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" id="inputEmail" style="width: 430px;background: #1d1e1e;border-radius: 10px;color: #ededed;margin: 0px;margin-left: 122px;text-align: left;" placeholder="Adresse mail" autocomplete="email" required autofocus>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align: left;">
+                            <div class="col" style="text-align: left;margin: 0px;">
+                            <label for="inputPassword" style="display:none;">Password</label>
+                            <input class="form-control" name="password" id="inputPassword" type="password" style="width: 430px;border-radius: 10px;color: #ededed;background: #1d1e1e;margin-top: 20px;text-align: left;margin-left: 122px;" placeholder="Mot de passe" autocomplete="current-password" required>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align: left;">
+                            <div class="col" style="text-align: left;margin: 0px; color: #ededed;margin-top: 13px;margin-left: 122px;">
+                                <label>
+                                    <input type="checkbox" name="_remember_me" checked>
+                                    souvenez vous de moi
+                                </label>
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-    <label>
-        <input type="checkbox" name="_remember_me" checked>
-        souvenez vous de moi
-    </label>
+                                <input type="hidden" name="_csrf_token"
+                                    value="{{ csrf_token('authenticate') }}"
+                                >
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="text-align: center; margin-top: 5px;">
+                                <input class="btn btn-primary" type="submit" value="Se connecter" style="background: rgb(6,133,18);border-style: none;" />
+                                </form>
+                                <a href="/reset-password" style="margin-left: 42px;">Mot de passe oublié ?</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 50px;">
+                <div class="col" style="margin: auto;">
+                    <p style="color: #ededed;width: 168px;margin-top: 20px;margin-left: 158px;">Pas encore de compte?</p>
+                </div>
+                <div class="col" style="text-align: left;margin: auto;padding-top: 0px;">
+                    <a href="/register" style="margin-left: 10px;">S&#39;inscrire</a>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
 {% endblock %}

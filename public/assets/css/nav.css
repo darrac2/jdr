@@ -1,0 +1,14 @@
+.img-logo{
+    width: 5.5em;
+    
+}
+.profil-img{
+    width: 2em;
+    background-color: white;
+    border-radius: 50%;
+    padding: 0.1em;
+    z-index: 1;
+}
+.ressource-heading{
+    margin-top: 1.8em;
+}
