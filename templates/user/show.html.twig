@@ -3,34 +3,6 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-            <tr>
-                <th>Profil_image</th>
-                <td>{{ user.profilImage }}</td>
-            </tr>
-            <tr>
-                <th>Pseudo</th>
-                <td>{{ user.pseudo }}</td>
-            </tr>
-            <tr>
-                <th>Date_creation</th>
-                <td>{{ user.dateCreation ? user.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ user.description }}</td>
-            </tr>
-            <tr>
-                <th>IsVerified</th>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
     <header class="mb-5 pb-0" style="margin: 0px;padding: 0px;height: 1040px;">
         <div class="container" style="margin-bottom: 0px;margin-top: 89px;background: #212529;border-radius: 6px;height: 151px;width: 800px;min-height: 151px;">
             <div class="row">
@@ -42,7 +14,7 @@
                 {% endif %}
                 </div>
                 <div class="col">
-                    <h2 class="" style="color: #ededed;margin-top: 10px;">{{ user.pseudo }}</h2>
+                    <h1 class="" style="color: #ededed;margin-top: 10px;">{{ user.pseudo }}</h1>
                     <p style="height: 123px;margin-top: 15px;color: #ededed;">{{ user.description |raw }} </p>
                 </div>
             </div>
@@ -54,6 +26,7 @@
                     <p style="color: #ededed;text-align: center;font-size: 26px;margin-top: 13px;">VOTRE BIBLIOTHÈQUE</p>
                 </div>
             </div>
+
             <div class="row" style="height: 210px;">
                 <div class="col">
                     <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" />
@@ -63,10 +36,13 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;">
+                        <img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" />
+                    </div>
                 </div>
                 <div class="col">
-                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px">
+                    <img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
                 </div>
             </div>
             <div class="row" style="height: 210px;margin-top: 35px;">
@@ -96,6 +72,4 @@
 
     <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
 
-
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

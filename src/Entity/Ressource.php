@@ -48,6 +48,14 @@ class Ressource
     #[ORM\Column(nullable: true)]
     private ?int $liker = null;
 
+    #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: SignalementRessource::class)]
+    private Collection $signalementRessources;
+
+    public function __construct()
+    {
+        $this->signalementRessources = new ArrayCollection();
+    }
+
 
 
     public function getId(): ?int
@@ -178,5 +186,35 @@ class Ressource
     public function isPrivate(): ?bool
     {
         return $this->private;
+    }
+
+    /**
+     * @return Collection<int, SignalementRessource>
+     */
+    public function getSignalementRessources(): Collection
+    {
+        return $this->signalementRessources;
+    }
+
+    public function addSignalementRessource(SignalementRessource $signalementRessource): static
+    {
+        if (!$this->signalementRessources->contains($signalementRessource)) {
+            $this->signalementRessources->add($signalementRessource);
+            $signalementRessource->setRessource($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignalementRessource(SignalementRessource $signalementRessource): static
+    {
+        if ($this->signalementRessources->removeElement($signalementRessource)) {
+            // set the owning side to null (unless already changed)
+            if ($signalementRessource->getRessource() === $this) {
+                $signalementRessource->setRessource(null);
+            }
+        }
+
+        return $this;
     }
 }

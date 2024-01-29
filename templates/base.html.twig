@@ -27,6 +27,20 @@
                         <li class="nav-item"><a class="nav-link" href="/forum">Forum</a></li>
                         <li class="nav-item"><a class="nav-link" href="/ressource">Bibliothèque</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">À propos</a></li>
+                        {% if app.user.roles[0] == 'ROLE_ADMIN'  %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
+                                    <i class="bi bi-building-gear"></i> Administrateur
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/user">User</a></li>
+                                    <li><a class="dropdown-item" href="/actualite">Actualité</a></li>
+                                    <li><a class="dropdown-item" href="/category">Catégorie ressource</a></li>
+                                    <li><a class="dropdown-item" href="/newsletter">signalement</a></li>
+                                    
+                                </ul>
+                        {% endif %}
+                            </li>
                     </ul>
                 </div>
                 {% if app.user %}
@@ -35,13 +49,13 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="/user/{{ app.user.id }}">Profil</a>
-                            <a class="dropdown-item" href="/user">Paramètres</a>
+                            <a class="dropdown-item" href="/parramètre">Paramètres</a>
                             <a class="dropdown-item" href="/logout">Déconnexion</a>
                         </div>
                         </div>
 
                 {% else %}
-                <a href="/login"><button class="btn btn-primary" type="button" style="background: rgb(52,52,57);color: #ededed;border-color: #212529;" >Connexion</button></a>
+                <a href="/login"><button class="btn btn-primary" type="button" style="background: rgb(52,52,57);color: #ededed;border-color: #212529;">Connexion</button></a>
                 {% endif %}
                 
             </div>

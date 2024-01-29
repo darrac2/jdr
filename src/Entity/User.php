@@ -65,6 +65,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Actualite::class)]
     private Collection $actualites;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: SignalementRessource::class)]
+    private Collection $signalementRessources;
+
 
 
     public function __construct()
@@ -72,6 +75,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->listAmis = new ArrayCollection();
         $this->conversations = new ArrayCollection();
         $this->actualites = new ArrayCollection();
+        $this->signalementRessources = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -349,6 +353,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($actualite->getUser() === $this) {
                 $actualite->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SignalementRessource>
+     */
+    public function getSignalementRessources(): Collection
+    {
+        return $this->signalementRessources;
+    }
+
+    public function addSignalementRessource(SignalementRessource $signalementRessource): static
+    {
+        if (!$this->signalementRessources->contains($signalementRessource)) {
+            $this->signalementRessources->add($signalementRessource);
+            $signalementRessource->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignalementRessource(SignalementRessource $signalementRessource): static
+    {
+        if ($this->signalementRessources->removeElement($signalementRessource)) {
+            // set the owning side to null (unless already changed)
+            if ($signalementRessource->getUser() === $this) {
+                $signalementRessource->setUser(null);
             }
         }
 

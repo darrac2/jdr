@@ -17,10 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Constraints\File;
 
-#[Route('/user')]
+#[Route('/')]
 class UserController extends AbstractController
 {
-    #[Route('/', name: 'app_user_index', methods: ['GET'])]
+    #[Route('/user', name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('user/index.html.twig', [
@@ -28,7 +28,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
+    #[Route('profile/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -99,15 +99,19 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile/{id}', name: 'app_user_profile', methods: ['GET'])]
-    public function profil(User $user): Response
+    public function profil(User $user,ManagerRegistry $doctrine): Response
     {
+        // ressource findBy User
+        $ressouces = $doctrine->getRepository(Ressource::class)->findBy(["user" => $user]); 
+        
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'ressources' => $ressouces,
         ]);
     }
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
-    public function show(User $user, ManagerRegistry $doctrine,): Response
+    public function show(User $user, ManagerRegistry $doctrine): Response
     {
         // ressource findBy User
         $ressouces = $doctrine->getRepository(Ressource::class)->findBy(["user" => $user]); 
