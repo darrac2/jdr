@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SignalementRessource{% endblock %}
+
+{% block body %}
+    <h1>Edit SignalementRessource</h1>
+
+    {{ include('signalement_ressource/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_signalement_ressource_index') }}">back to list</a>
+
+    {{ include('signalement_ressource/_delete_form.html.twig') }}
+{% endblock %}

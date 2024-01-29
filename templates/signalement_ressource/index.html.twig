@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SignalementRessource index{% endblock %}
+
+{% block body %}
+    <h1>SignalementRessource index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Commentaire</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for signalement_ressource in signalement_ressources %}
+            <tr>
+                <td>{{ signalement_ressource.id }}</td>
+                <td>{{ signalement_ressource.commentaire }}</td>
+                <td>
+                    <a href="{{ path('app_signalement_ressource_show', {'id': signalement_ressource.id}) }}">show</a>
+                    <a href="{{ path('app_signalement_ressource_edit', {'id': signalement_ressource.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_signalement_ressource_new') }}">Create new</a>
+{% endblock %}
