@@ -68,6 +68,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: SignalementRessource::class)]
     private Collection $signalementRessources;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Signalementforum::class)]
+    private Collection $Forum;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Signalementforumcommentaire::class)]
+    private Collection $forumCommentaire;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Liker::class)]
+    private Collection $likers;
+
 
 
     public function __construct()
@@ -76,6 +85,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->conversations = new ArrayCollection();
         $this->actualites = new ArrayCollection();
         $this->signalementRessources = new ArrayCollection();
+        $this->Forum = new ArrayCollection();
+        $this->forumCommentaire = new ArrayCollection();
+        $this->likers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -383,6 +395,88 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($signalementRessource->getUser() === $this) {
                 $signalementRessource->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addForum(Signalementforum $forum): static
+    {
+        if (!$this->Forum->contains($forum)) {
+            $this->Forum->add($forum);
+            $forum->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeForum(Signalementforum $forum): static
+    {
+        if ($this->Forum->removeElement($forum)) {
+            // set the owning side to null (unless already changed)
+            if ($forum->getUser() === $this) {
+                $forum->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Signalementforumcommentaire>
+     */
+    public function getForumCommentaire(): Collection
+    {
+        return $this->forumCommentaire;
+    }
+
+    public function addForumCommentaire(Signalementforumcommentaire $forumCommentaire): static
+    {
+        if (!$this->forumCommentaire->contains($forumCommentaire)) {
+            $this->forumCommentaire->add($forumCommentaire);
+            $forumCommentaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeForumCommentaire(Signalementforumcommentaire $forumCommentaire): static
+    {
+        if ($this->forumCommentaire->removeElement($forumCommentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($forumCommentaire->getUser() === $this) {
+                $forumCommentaire->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Liker>
+     */
+    public function getLikers(): Collection
+    {
+        return $this->likers;
+    }
+
+    public function addLiker(Liker $liker): static
+    {
+        if (!$this->likers->contains($liker)) {
+            $this->likers->add($liker);
+            $liker->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLiker(Liker $liker): static
+    {
+        if ($this->likers->removeElement($liker)) {
+            // set the owning side to null (unless already changed)
+            if ($liker->getUser() === $this) {
+                $liker->setUser(null);
             }
         }
 

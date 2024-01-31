@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liker{% endblock %}
+
+{% block body %}
+    <h1>Liker</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ liker.id }}</td>
+            </tr>
+            <tr>
+                <th>Liker</th>
+                <td>{{ liker.liker ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_liker_index') }}">back to list</a>
+
+    <a href="{{ path('app_liker_edit', {'id': liker.id}) }}">edit</a>
+
+    {{ include('liker/_delete_form.html.twig') }}
+{% endblock %}

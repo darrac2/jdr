@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Liker{% endblock %}
+
+{% block body %}
+    <h1>Create new Liker</h1>
+
+    {{ include('liker/_form.html.twig') }}
+
+    <a href="{{ path('app_liker_index') }}">back to list</a>
+{% endblock %}

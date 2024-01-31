@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liker index{% endblock %}
+
+{% block body %}
+    <h1>Liker index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Liker</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for liker in likers %}
+            <tr>
+                <td>{{ liker.id }}</td>
+                <td>{{ liker.liker ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_liker_show', {'id': liker.id}) }}">show</a>
+                    <a href="{{ path('app_liker_edit', {'id': liker.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_liker_new') }}">Create new</a>
+{% endblock %}

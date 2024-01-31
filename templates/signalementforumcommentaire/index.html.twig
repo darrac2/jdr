@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Signalementforumcommentaire index{% endblock %}
+
+{% block body %}
+    <h1>Signalementforumcommentaire index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Sujet</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for signalementforumcommentaire in signalementforumcommentaires %}
+            <tr>
+                <td>{{ signalementforumcommentaire.id }}</td>
+                <td>{{ signalementforumcommentaire.sujet }}</td>
+                <td>
+                    <a href="{{ path('app_signalementforumcommentaire_show', {'id': signalementforumcommentaire.id}) }}">show</a>
+                    <a href="{{ path('app_signalementforumcommentaire_edit', {'id': signalementforumcommentaire.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_signalementforumcommentaire_new') }}">Create new</a>
+{% endblock %}

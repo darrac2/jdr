@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Signalementforum{% endblock %}
+
+{% block body %}
+    <h1>Signalementforum</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ signalementforum.id }}</td>
+            </tr>
+            <tr>
+                <th>Sujet</th>
+                <td>{{ signalementforum.sujet }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_signalementforum_index') }}">back to list</a>
+
+    <a href="{{ path('app_signalementforum_edit', {'id': signalementforum.id}) }}">edit</a>
+
+    {{ include('signalementforum/_delete_form.html.twig') }}
+{% endblock %}

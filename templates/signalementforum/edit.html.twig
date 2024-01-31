@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Signalementforum{% endblock %}
+
+{% block body %}
+    <h1>Edit Signalementforum</h1>
+
+    {{ include('signalementforum/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_signalementforum_index') }}">back to list</a>
+
+    {{ include('signalementforum/_delete_form.html.twig') }}
+{% endblock %}

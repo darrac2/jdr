@@ -32,6 +32,14 @@ class ForumCommentaire
     #[ORM\ManyToOne]
     private ?User $user = null;
 
+    #[ORM\OneToMany(mappedBy: 'forumcommentaire', targetEntity: Signalementforumcommentaire::class)]
+    private Collection $signalementforumcommentaires;
+
+    public function __construct()
+    {
+        $this->signalementforumcommentaires = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -81,6 +89,36 @@ class ForumCommentaire
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Signalementforumcommentaire>
+     */
+    public function getSignalementforumcommentaires(): Collection
+    {
+        return $this->signalementforumcommentaires;
+    }
+
+    public function addSignalementforumcommentaire(Signalementforumcommentaire $signalementforumcommentaire): static
+    {
+        if (!$this->signalementforumcommentaires->contains($signalementforumcommentaire)) {
+            $this->signalementforumcommentaires->add($signalementforumcommentaire);
+            $signalementforumcommentaire->setForumcommentaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignalementforumcommentaire(Signalementforumcommentaire $signalementforumcommentaire): static
+    {
+        if ($this->signalementforumcommentaires->removeElement($signalementforumcommentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($signalementforumcommentaire->getForumcommentaire() === $this) {
+                $signalementforumcommentaire->setForumcommentaire(null);
+            }
+        }
 
         return $this;
     }
