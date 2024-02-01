@@ -51,9 +51,13 @@ class Ressource
     #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: SignalementRessource::class)]
     private Collection $signalementRessources;
 
+    #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: Liker::class)]
+    private Collection $likers;
+
     public function __construct()
     {
         $this->signalementRessources = new ArrayCollection();
+        $this->likers = new ArrayCollection();
     }
 
 
@@ -212,6 +216,36 @@ class Ressource
             // set the owning side to null (unless already changed)
             if ($signalementRessource->getRessource() === $this) {
                 $signalementRessource->setRessource(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Liker>
+     */
+    public function getLikers(): Collection
+    {
+        return $this->likers;
+    }
+
+    public function addLiker(Liker $liker): static
+    {
+        if (!$this->likers->contains($liker)) {
+            $this->likers->add($liker);
+            $liker->setRessource($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLiker(Liker $liker): static
+    {
+        if ($this->likers->removeElement($liker)) {
+            // set the owning side to null (unless already changed)
+            if ($liker->getRessource() === $this) {
+                $liker->setRessource(null);
             }
         }
 

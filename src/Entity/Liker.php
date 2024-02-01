@@ -19,6 +19,9 @@ class Liker
     #[ORM\ManyToOne(inversedBy: 'likers')]
     private ?User $user = null;
 
+    #[ORM\ManyToOne(inversedBy: 'likers')]
+    private ?Ressource $ressource = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Liker
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getRessource(): ?Ressource
+    {
+        return $this->ressource;
+    }
+
+    public function setRessource(?Ressource $ressource): static
+    {
+        $this->ressource = $ressource;
 
         return $this;
     }
