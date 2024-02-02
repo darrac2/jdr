@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Likeforum index{% endblock %}
+
+{% block body %}
+    <h1>Likeforum index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Liker</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for likeforum in likeforums %}
+            <tr>
+                <td>{{ likeforum.id }}</td>
+                <td>{{ likeforum.liker ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_likeforum_show', {'id': likeforum.id}) }}">show</a>
+                    <a href="{{ path('app_likeforum_edit', {'id': likeforum.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_likeforum_new') }}">Create new</a>
+{% endblock %}

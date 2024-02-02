@@ -40,9 +40,13 @@ class Forum
     #[ORM\Column(nullable: true)]
     private ?int $liker = null;
 
+    #[ORM\OneToMany(mappedBy: 'forum', targetEntity: Likeforum::class)]
+    private Collection $likeforums;
+
     public function __construct()
     {
         $this->forumCommentaires = new ArrayCollection();
+        $this->likeforums = new ArrayCollection();
     }
 
 
@@ -150,6 +154,36 @@ class Forum
     public function setLiker(?int $liker): static
     {
         $this->liker = $liker;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Likeforum>
+     */
+    public function getLikeforums(): Collection
+    {
+        return $this->likeforums;
+    }
+
+    public function addLikeforum(Likeforum $likeforum): static
+    {
+        if (!$this->likeforums->contains($likeforum)) {
+            $this->likeforums->add($likeforum);
+            $likeforum->setForum($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikeforum(Likeforum $likeforum): static
+    {
+        if ($this->likeforums->removeElement($likeforum)) {
+            // set the owning side to null (unless already changed)
+            if ($likeforum->getForum() === $this) {
+                $likeforum->setForum(null);
+            }
+        }
 
         return $this;
     }

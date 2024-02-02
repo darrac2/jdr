@@ -77,6 +77,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Liker::class)]
     private Collection $likers;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Likeforum::class)]
+    private Collection $likeforums;
+
 
 
     public function __construct()
@@ -88,6 +91,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->Forum = new ArrayCollection();
         $this->forumCommentaire = new ArrayCollection();
         $this->likers = new ArrayCollection();
+        $this->likeforums = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -477,6 +481,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($liker->getUser() === $this) {
                 $liker->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Likeforum>
+     */
+    public function getLikeforums(): Collection
+    {
+        return $this->likeforums;
+    }
+
+    public function addLikeforum(Likeforum $likeforum): static
+    {
+        if (!$this->likeforums->contains($likeforum)) {
+            $this->likeforums->add($likeforum);
+            $likeforum->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikeforum(Likeforum $likeforum): static
+    {
+        if ($this->likeforums->removeElement($likeforum)) {
+            // set the owning side to null (unless already changed)
+            if ($likeforum->getUser() === $this) {
+                $likeforum->setUser(null);
             }
         }
 

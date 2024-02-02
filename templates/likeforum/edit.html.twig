@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Likeforum{% endblock %}
+
+{% block body %}
+    <h1>Edit Likeforum</h1>
+
+    {{ include('likeforum/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_likeforum_index') }}">back to list</a>
+
+    {{ include('likeforum/_delete_form.html.twig') }}
+{% endblock %}
