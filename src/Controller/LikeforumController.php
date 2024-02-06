@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Forum;
 use App\Entity\Likeforum;
+use App\Entity\User;
 use App\Form\LikeforumType;
 use App\Repository\LikeforumRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,24 +26,54 @@ class LikeforumController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_likeforum_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/new', name: 'app_likeforum_new', methods: ['GET'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine)
     {
         $likeforum = new Likeforum();
         $form = $this->createForm(LikeforumType::class, $likeforum);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //user 
+            $repository = $doctrine->getRepository(User::class);
+            $email = $this->getUser()->getUserIdentifier();
+            $user = $repository->findOneBy(array('email' => $email));
+            $likeforum->setUser($user);
+            //set forum 
+            $forumid = $request->query->get('idforum');
+            //search object forum
+            $repository2 = $doctrine->getRepository(Forum::class);
+            $forum= $repository2 -> findOneBy(array('id' => $forumid));
+            $likeforum->setForum($forum);
+            //liker set 1
+            $likeforum->setLiker(1);
             $entityManager->persist($likeforum);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_likeforum_index', [], Response::HTTP_SEE_OTHER);
+
+            
         }
 
-        return $this->render('likeforum/new.html.twig', [
-            'likeforum' => $likeforum,
-            'form' => $form,
-        ]);
+    }
+
+    #[Route('/update/{id}', name: 'app_likeforum_update', methods: ['GET'])]
+    public function update(Request $request ,Likeforum $likeforum, EntityManager $entityManager): Response
+    {
+        
+        //set liker update
+        $liker = $request->query->get('update');
+        //get user
+        $user=$this->getUser();
+        //verification of the owner of the post 
+        if($user != $likeforum->getUser()){
+            return $this->json("Vous n'êtes pas l'auteur de ce like ");
+        }else{
+            $likeforum->setLiker($liker);
+            $entityManager->persist($likeforum);
+            $entityManager->flush();
+            
+        }
+
     }
 
     #[Route('/{id}', name: 'app_likeforum_show', methods: ['GET'])]
