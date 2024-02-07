@@ -38,7 +38,7 @@ class SignalementforumController extends AbstractController
             $email = $this->getUser()->getUserIdentifier();
             $user = $repository->findOneBy(array('email' => $email));
             $signalementforum->setUser($user);
-            $id=$request->attributes->get("idforumcom");
+            $id=$request->attributes->get("idforum");
             $repository2= $doctrine->getRepository(Forum::class);
             $forum = $repository2->findOneBy(array('id' => $id));
             $signalementforum->setForum($forum);

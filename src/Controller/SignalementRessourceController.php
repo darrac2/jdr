@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Ressource;
 use App\Entity\SignalementRessource;
+use App\Entity\User;
 use App\Form\SignalementRessourceType;
 use App\Repository\SignalementRessourceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,13 +26,22 @@ class SignalementRessourceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_signalement_ressource_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
         $signalementRessource = new SignalementRessource();
         $form = $this->createForm(SignalementRessourceType::class, $signalementRessource);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //user
+            $repository = $doctrine->getRepository(User::class);
+            $email = $this->getUser()->getUserIdentifier();
+            $user = $repository->findOneBy(array('email' => $email));
+            $signalementRessource->setUser($user);
+            $id=$request->attributes->get("idressource");
+            $repository2= $doctrine->getRepository(Ressource::class);
+            $ressource = $repository2->findOneBy(array('id' => $id));
+            $signalementRessource->setRessource($ressource);
             $entityManager->persist($signalementRessource);
             $entityManager->flush();
 
