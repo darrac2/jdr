@@ -43,10 +43,14 @@ class Forum
     #[ORM\OneToMany(mappedBy: 'forum', targetEntity: Likeforum::class)]
     private Collection $likeforums;
 
+    #[ORM\OneToMany(mappedBy: 'forum', targetEntity: Signalementforum::class)]
+    private Collection $signalementforums;
+
     public function __construct()
     {
         $this->forumCommentaires = new ArrayCollection();
         $this->likeforums = new ArrayCollection();
+        $this->signalementforums = new ArrayCollection();
     }
 
 
@@ -182,6 +186,36 @@ class Forum
             // set the owning side to null (unless already changed)
             if ($likeforum->getForum() === $this) {
                 $likeforum->setForum(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Signalementforum>
+     */
+    public function getSignalementforums(): Collection
+    {
+        return $this->signalementforums;
+    }
+
+    public function addSignalementforum(Signalementforum $signalementforum): static
+    {
+        if (!$this->signalementforums->contains($signalementforum)) {
+            $this->signalementforums->add($signalementforum);
+            $signalementforum->setForum($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSignalementforum(Signalementforum $signalementforum): static
+    {
+        if ($this->signalementforums->removeElement($signalementforum)) {
+            // set the owning side to null (unless already changed)
+            if ($signalementforum->getForum() === $this) {
+                $signalementforum->setForum(null);
             }
         }
 

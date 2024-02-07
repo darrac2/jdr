@@ -19,6 +19,9 @@ class Signalementforum
     #[ORM\ManyToOne(inversedBy: 'Forum')]
     private ?User $user = null;
 
+    #[ORM\ManyToOne(inversedBy: 'signalementforums')]
+    private ?Forum $forum = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Signalementforum
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getForum(): ?Forum
+    {
+        return $this->forum;
+    }
+
+    public function setForum(?Forum $forum): static
+    {
+        $this->forum = $forum;
 
         return $this;
     }
