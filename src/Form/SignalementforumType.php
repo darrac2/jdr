@@ -13,7 +13,7 @@ class SignalementforumType extends AbstractType
     {
         $builder
             ->add('sujet')
-            ->add('user')
+            ->add('message')
         ;
     }
 

@@ -13,7 +13,6 @@ class SignalementforumcommentaireType extends AbstractType
     {
         $builder
             ->add('sujet')
-            ->add('user')
             ->add('forumcommentaire')
         ;
     }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SignalementRessourceRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SignalementRessourceRepository::class)]
@@ -21,6 +22,9 @@ class SignalementRessource
 
     #[ORM\ManyToOne(inversedBy: 'signalementRessources')]
     private ?User $user = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $message = null;
 
     public function getId(): ?int
     {
@@ -59,6 +63,18 @@ class SignalementRessource
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(string $message): static
+    {
+        $this->message = $message;
 
         return $this;
     }

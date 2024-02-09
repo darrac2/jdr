@@ -13,8 +13,6 @@ class SignalementRessourceType extends AbstractType
     {
         $builder
             ->add('commentaire')
-            ->add('ressource')
-            ->add('user')
         ;
     }
 
