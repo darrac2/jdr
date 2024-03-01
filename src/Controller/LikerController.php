@@ -46,22 +46,28 @@ class LikerController extends AbstractController
             //search object ressource
             $repository2 = $doctrine->getRepository(Ressource::class);
             $ressource= $repository2 -> findOneBy(array('id' => $ressourceid));
+            //verifier si object liker existe deja par rappot a user et ressource
+            $repository3 =  $doctrine->getRepository(Liker::class);
+            $like =  $repository3->findOneBy([
+                "user" => $user,
+                "ressource"=>$ressource
+            ]) ;
+            if($like == null){
             //ressource ajouter count liker
-            $ressourceliker = $ressource->getLiker();
+            $ressourceliker = $ressource->getComptliker();
             //find one by user and ressoure
-            $check = $repository2->findOneBy(['user' => $user, 'ressource'=>$ressource]);
-            if( $check != null ){
-                $ressource->setLiker($ressourceliker +1 );
-                $entityManager->persist($ressource);
-                $liker->setRessource($ressource);
+            $ressource->setComptliker($ressourceliker +1 );
+            //rajouter le lien
+            $entityManager->persist($ressource);
+            $liker->setRessource($ressource);
             //liker set 1
             $liker->setLiker(1);
+
 
             $entityManager->persist($liker);
             $entityManager->flush();
             $this->addFlash('success', 'Entity created successfully!');
             }
-
             
             return $this->redirectToRoute('app_home');
 
@@ -84,22 +90,22 @@ class LikerController extends AbstractController
         $repository2 = $doctrine->getRepository(Ressource::class);
         $ressource = $repository2->findOneBy(array('id' => $idressource));
         //get liker from user and ressource
-        $liker = $likerRepository->findOneBy(['user'=>$user,'ressource' => $ressource]);
-        //verification of the owner of the post 
-        if($liker == null){
-            return $$this->forward('app_liker_new',
-            [
-                'idressource'=>$idressource,
-            ]
-        );
-        }else{
-            if ($likerupdate != null){
-                $liker->setLiker($likerupdate);
-                $entityManager->persist($liker);
+        $like = $likerRepository->findOneBy(['user'=>$user,'Ressource' => $ressource]);
+
+        if ($like != null and $user = $like->getUser()){
+                $num = $ressource->getComptliker();
+                if($likerupdate == 0){
+                    $ressource->setComptLiker($num - 1);
+                }else{
+                    $ressource->setComptLiker($num + 1);
+                }
+                
+                $entityManager->persist($ressource);
+                $like->setLiker($likerupdate);
+                $entityManager->persist($like);
                 $entityManager->flush();
             }
             return $this->redirectToRoute('app_home');
-        }
 
     }
     #[Route('/{id}', name: 'app_liker_show', methods: ['GET'])]

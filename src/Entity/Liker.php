@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LikerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LikerRepository::class)]
@@ -20,7 +22,13 @@ class Liker
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'likers')]
-    private ?Ressource $ressource = null;
+    private ?Ressource $Ressource = null;
+
+
+    public function __construct()
+    {
+        
+    }
 
     public function getId(): ?int
     {
@@ -39,6 +47,11 @@ class Liker
         return $this;
     }
 
+    public function getLiker(): ?int
+    {
+        return $this->liker;
+    }
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -53,13 +66,14 @@ class Liker
 
     public function getRessource(): ?Ressource
     {
-        return $this->ressource;
+        return $this->Ressource;
     }
 
-    public function setRessource(?Ressource $ressource): static
+    public function setRessource(?Ressource $Ressource): static
     {
-        $this->ressource = $ressource;
+        $this->Ressource = $Ressource;
 
         return $this;
     }
+
 }

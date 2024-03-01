@@ -46,17 +46,22 @@ class Ressource
     private ?User $user = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $liker = null;
+    private ?int $comptliker = null;
 
     #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: SignalementRessource::class)]
     private Collection $signalementRessources;
 
+
     #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: Liker::class)]
+    private Collection $Liker;
+
+    #[ORM\OneToMany(mappedBy: 'Ressource', targetEntity: Liker::class)]
     private Collection $likers;
 
     public function __construct()
     {
         $this->signalementRessources = new ArrayCollection();
+        $this->Liker = new ArrayCollection();
         $this->likers = new ArrayCollection();
     }
 
@@ -175,14 +180,14 @@ class Ressource
         return $this;
     }
 
-    public function getLiker(): ?int
+    public function getComptliker(): ?int
     {
-        return $this->liker;
+        return $this->comptliker;
     }
 
-    public function setLiker(?int $liker): static
+    public function setComptliker(?int $comptliker): static
     {
-        $this->liker = $liker;
+        $this->comptliker = $comptliker;
 
         return $this;
     }
@@ -220,6 +225,15 @@ class Ressource
         }
 
         return $this;
+    }
+
+
+    /**
+     * @return Collection<int, Liker>
+     */
+    public function getLiker(): Collection
+    {
+        return $this->Liker;
     }
 
     /**
