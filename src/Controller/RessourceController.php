@@ -99,6 +99,7 @@ class RessourceController extends AbstractController
             //date now
             $date = new DateTime('now');
             $ressource->setDatePublication($date);
+            $ressource->setLiker(0);
             //user 
             
             

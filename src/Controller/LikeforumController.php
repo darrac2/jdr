@@ -45,6 +45,10 @@ class LikeforumController extends AbstractController
             $repository2 = $doctrine->getRepository(Forum::class);
             $forum= $repository2 -> findOneBy(array('id' => $forumid));
             $likeforum->setForum($forum);
+            //forum count liker
+            $forumliker= $forum->getLiker();
+            $forum->setLiker( $forumliker+1 );
+            $entityManager->persist($forum); 
             //liker set 1
             $likeforum->setLiker(1);
             $entityManager->persist($likeforum);

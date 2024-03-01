@@ -4,11 +4,38 @@
 }
 .profil-img{
     width: 2em;
+    height: 2em;
     background-color: white;
     border-radius: 50%;
     padding: 0.1em;
     z-index: 1;
 }
+.profil-img1{
+  width: 2em;
+  
+  background-color: white;
+  border-radius: 50%;
+  padding: 0.1em;
+  z-index: 1;
+}
 .ressource-heading{
     margin-top: 1.8em;
 }
+.linkcate {
+    color: #428BCA;
+    text-decoration: none;
+  }
+  
+  .linkcate:hover, .linkcate:focus {
+    color: #2A6496;
+    text-decoration: underline;
+  }
+  .linktitle {
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
+  .linktitle:hover, .linktitle:focus {
+    color: #ffffff;
+    text-decoration: underline;
+  }

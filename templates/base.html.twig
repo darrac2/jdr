@@ -18,7 +18,7 @@
 
     </head>
     
-    <body style="background: rgb(52,52,57);">
+    <body style="background: rgb(52,52,57); overflow-x:hidden;">
         <nav class="navbar navbar-expand-md bg-dark py-3" data-bs-theme="dark" style="background: rgba(17,17,27,0.75);backdrop-filter: opacity(0.49);">
             <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><img src="/assets/img/pngegg_3.png" class="img-logo" alt="Responsive image" >
                             <span style="color: #ededed;">Le grimoire du rôle play</span></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-5"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -27,7 +27,8 @@
                         <li class="nav-item"><a class="nav-link" href="/forum">Forum</a></li>
                         <li class="nav-item"><a class="nav-link" href="/ressource">Bibliothèque</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">À propos</a></li>
-                        {% if app.user.roles[0] == 'ROLE_ADMIN'  %}
+                        {% if app.user %}
+                            {% if app.user.roles[0] == 'ROLE_ADMIN'  %}
                             <li class="nav-item dropdown">
                                 <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
                                     <i class="bi bi-building-gear"></i> Administrateur
@@ -40,16 +41,25 @@
                                     
                                 </ul>
                         {% endif %}
+                        {% endif %}
+                        
                             </li>
                     </ul>
                 </div>
                 {% if app.user %}
                     <div class="dropdown">                
-                            <a class="nav-link" role="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"> <img class="profil-img" src="/assets/img/person.svg"></a>
+                            <a class="nav-link" role="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                {% if app.user.profilImage != null %}
+                                    <img class="profil-img" src="{{ app.user.profilImage }}">
+                                    {% else %}
+                                    <img class="profil-img1" src="/assets/img/person.svg">
+                                {% endif %}
+                                
+                             </a>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="/user/{{ app.user.id }}">Profil</a>
-                            <a class="dropdown-item" href="/parramètre">Paramètres</a>
+                            <a class="dropdown-item" href="/profile/{{ app.user.id }}">Profil</a>
+                            <a class="dropdown-item" href="/profile/{{ app.user.id }}/edit">Paramètres</a>
                             <a class="dropdown-item" href="/logout">Déconnexion</a>
                         </div>
                         </div>

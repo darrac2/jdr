@@ -48,7 +48,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/profile/new', name: 'app_profile_image', methods: ['GET', 'POST'])]
+    #[Route('/profile/{id}/new', name: 'app_profile_image', methods: ['GET', 'POST'])]
     public function imageprofile(Request $request, ManagerRegistry $doctrine, EntityManagerInterface $entityManager,User $user, SluggerInterface $slugger): Response
     {
         
@@ -121,8 +121,50 @@ class UserController extends AbstractController
             'ressources' => $ressouces,
         ]);
     }
+    #[Route('/profile/image/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
+    public function imageupdate(Request $request, User $user, EntityManagerInterface $entityManager,SluggerInterface $slugger): Response
+    {
+        $form = $this->createForm(ProfileType::class, $user);
+        $form->handleRequest($request);
 
-    #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imagesource = $form->get('profil_image')->getData();
+            $originalFilename = pathinfo($imagesource->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = $slugger->slug($originalFilename);
+            $newFilename = $safeFilename.'-'.uniqid().'.'.$imagesource->guessExtension();
+            //creer et déplacer l'image
+            try {
+                //creer dosier user if d'ont exist
+                $userid = $user->getId(); 
+                $source = $this->getParameter("data_directory");
+                $url = $source."/".$userid."/profile";
+                if (file_exists( $url) == false){
+                    mkdir($url, 0770, true );
+                }
+                
+                $imagesource->move(   
+                    $url,
+                    $newFilename
+                );
+                $user->setProfilImage($url."/".$newFilename);
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+            
+            $user->setProfilImage($url);
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/profile/description/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(UserType::class, $user);

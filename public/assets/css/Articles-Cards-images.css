@@ -3,3 +3,21 @@
 }
 
 
+.linkcate {
+  color: #428BCA;
+  text-decoration: none;
+}
+
+.linkcate:hover, .linkcate:focus {
+  color: #2A6496;
+  text-decoration: underline;
+}
+.linktitle {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.linktitle:hover, .linktitle:focus {
+  color: #ffffff;
+  text-decoration: underline;
+}

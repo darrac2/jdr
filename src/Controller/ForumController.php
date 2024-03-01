@@ -74,6 +74,7 @@ class ForumController extends AbstractController
             $user = $repository->findOneBy(array('email' => $email));
             $forum->setUser($user);
             $forum->setOrdre(0);
+            $forum->setLiker(0);
 
             $entityManager->persist($forum);
             $entityManager->flush();

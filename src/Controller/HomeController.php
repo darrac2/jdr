@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Actualite;
 use App\Entity\Conversation;
 use App\Entity\ListAmis;
 use App\Entity\User;
+use App\Repository\ActualiteRepository;
+use App\Repository\LikerRepository;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,13 +24,15 @@ use App\Repository\RessourceRepository;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index( RessourceRepository $ressourceRepository): Response
+    public function index( RessourceRepository $ressourceRepository, ActualiteRepository $actualiteRepository, LikerRepository $likerRepository): Response
     {
         
         
         return $this->render('home/index.html.twig', [
             'ressources' => $ressourceRepository->findAll(),
+            'actualites' => $actualiteRepository->findAll(),
             'controller_name' => 'HomeController',
+            'liker' => $likerRepository->findAll(),
         ]);
     }
     #[Route('/profile', name: 'app_profile')]
