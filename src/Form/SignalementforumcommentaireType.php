@@ -15,10 +15,25 @@ class SignalementforumcommentaireType extends AbstractType
         $builder
             ->add('sujet', ChoiceType::class, [
                 'choices'  => [
-                    'Oui' => 1,
-                    'Non' => 0,
+                    'Sélectionnez un motif' => "0",
+                    "Pédopornographie" => "Pédopornographie",
+                    'Pédopornographie' => 'Propos haineux, discrimination, négationnisme',
+                    'Menaces physiques '=> 'Menaces physiques ',
+                    "Piratage, non respect des droits d'auteurs"=> "Piratage, non respect des droits d'auteur",
+                    "Apologie de comportements illégaux"=>"Apologie de comportements illégaux",
+                    "Terrorisme : menace ou apologie"=>"Terrorisme : menace ou apologie",
+                    "Raid, flood, attaque de sites"=>"Raid, flood, attaque de sites",
+                    "Pornographie"=>"Pornographie",
+                    "Insulte, diffamation"=>"Insulte, diffamation",
+                    "Spoilers"=>"Spoilers",
+                    "Image ou vidéo choquante, gore"=>"Image ou vidéo choquante, gore",
+                    "Données personnelles"=>"Données personnelles",
+                    "Suicide ou automutilation"=>"Suicide ou automutilation",
+                    "Message inopportun"=>"Message inopportun",
+                    "Publicité"=>"Publicité",
+                    "Autre"=>"Autre",
                 ],
-                'label' => 'Contenue téléchargeable : ', 
+                'label' => 'Motif : ', 
                 'attr' => array('class' => 'inputstyle form-control '),
                 'required' => true])
             ->add('forumcommentaire')
