@@ -1,11 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Ressource{% endblock %}
+{% block title %}Nouvelle ressource{% endblock %}
 
 {% block body %}
-    <h1>Create new Ressource</h1>
+   
+    <section class="mb-5 pb-0" style="margin: 0px;padding: 0px;height: 473px; margin-bottom:50px;display: contents;">
+     <div class="row">
+            <div class="col">
+                <a style="float: right; margin-right:15px;margin-top:15px;" href="{{ path('app_ressource_index') }}">Retour à la bibliothèque</a>
+            </div>
+        </div>
+    <div class="container" style="margin-bottom: 50px;margin-top: 89px;background: #212529;border-radius: 6px;height: 550px;width: 700px;">
+        <div class="row">
+            <div class="col">
+                <p style="color: #ededed;text-align: center;font-size: 30px;margin-top: 13px;margin-bottom: 23px;">Ajouter une nouvelle ressource</p>
+            </div>
+        </div>
 
     {{ include('ressource/_form.html.twig') }}
 
-    <a href="{{ path('app_ressource_index') }}">back to list</a>
+    
+    </div>
+</section>
+<div></div>
+    
 {% endblock %}

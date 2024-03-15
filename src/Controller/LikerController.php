@@ -41,8 +41,6 @@ class LikerController extends AbstractController
             $email = $this->getUser()->getUserIdentifier();
             $user = $repository->findOneBy(array('email' => $email));
             $liker->setUser($user);
-            //set ressource 
-            $ressourceid = $request->query->get('idressource');
             //search object ressource
             $repository2 = $doctrine->getRepository(Ressource::class);
             $ressource= $repository2 -> findOneBy(array('id' => $ressourceid));
@@ -50,29 +48,33 @@ class LikerController extends AbstractController
             $repository3 =  $doctrine->getRepository(Liker::class);
             $like =  $repository3->findOneBy([
                 "user" => $user,
-                "ressource"=>$ressource
+                "Ressource"=>$ressource
             ]) ;
             if($like == null){
-            //ressource ajouter count liker
-            $ressourceliker = $ressource->getComptliker();
-            //find one by user and ressoure
-            $ressource->setComptliker($ressourceliker +1 );
-            //rajouter le lien
-            $entityManager->persist($ressource);
-            $liker->setRessource($ressource);
-            //liker set 1
-            $liker->setLiker(1);
+                
+                //ressource ajouter count liker
+                $ressourceliker = $ressource->getComptliker();
+                //find one by user and ressoure
+                $ressource->setComptliker($ressourceliker + 1 );
+                //rajouter le lien
+                $entityManager->persist($ressource);
+                $liker->setRessource($ressource);
+                //liker set 1
+                $liker->setLiker(1);
 
 
-            $entityManager->persist($liker);
-            $entityManager->flush();
-            $this->addFlash('success', 'Entity created successfully!');
+                $entityManager->persist($liker);
+                $entityManager->flush();
+                $this->addFlash('success', 'Entity created successfully!');
+            }else{
+                //fowrd update
+            
             }
             
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_liker_index');
 
         }
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_liker_index');
     }
     
     #[Route('/update', name: 'app_liker_update', methods: ['GET'])]

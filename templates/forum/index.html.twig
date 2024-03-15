@@ -33,7 +33,13 @@
                 <div class="card-body" style="height: 110px;text-align: center;">
                     <div class="row" style="height: 90px;">
                         <div class="col-xl-2" style="width: 75px;height: 75px;margin-right: 10px;">
-                            <div style="height: 75px;padding-right: 0px;margin-right: 0px;width: 75px;"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="75" height="75" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-top: 0;margin-bottom: 0;margin-left: 0;margin-right: 0;height: 75px;width: 75px;" /></div>
+                            <div style="height: 75px;padding-right: 0px;margin-right: 0px;width: 75px;">
+                            {% if forume.user.profilImage != null %}
+                                    <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="75" height="75" src="{{forume.user.profilImage}}" style="margin-top: 0;margin-bottom: 0;margin-left: 0;margin-right: 0;height: 75px;width: 75px;" />
+                                    {% else %}
+                                    <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="75" height="75" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-top: 0;margin-bottom: 0;margin-left: 0;margin-right: 0;height: 75px;width: 75px;" />
+                                {% endif %}
+                            </div>
                         </div>
                         <div class="col" style="height: 75px;">
                             <div class="d-flex" style="margin-left: 0px;width: 105%;height: 46px;">
@@ -46,10 +52,32 @@
                                     </div>
                                     <div class="col-xl-2" style="width: 15%;padding-right: 0px;padding-left: 0;">
                                         <p style="color: #ededed;text-align: right;margin-left: 1px;margin-right: -31px;">{{ forume.user.pseudo }}</p>
-                                        <p style="font-size: 20px;margin-bottom: 0;margin-top: 0;color: #ededed;margin-left: 0px;text-align: right;padding-top: 7px;padding-left: 0px;padding-right: 0px;margin-right: -104px;">{{ forume.liker }}</p>
+                                        <p style="font-size: 20px;margin-bottom: 0;margin-top: 0;color: #ededed;margin-left: 0px;text-align: right;padding-top: 7px;padding-left: 0px;padding-right: 0px;margin-right: -104px;" id="num-{{forume.id}}">{{ forume.liker }}</p>
                                     </div>
                                     <div class="col" style="width: 15%;padding-right: 0;padding-left: 0;">
-                                        <p style="color: #ededed;text-align: right;">{{ forume.dateCrea ? forume.dateCrea|date('Y-m-d') : '' }}</p><img src="/assets/img/heart.svg" style="height: 34px;border-style: none;filter: invert(91%);margin-left: 115px;" />
+                                        <p style="color: #ededed;text-align: right;">{{ forume.dateCrea ? forume.dateCrea|date('Y-m-d') : '' }}</p>
+                                        {% set likefull = false %}
+                                {% for likerforum in likerforums %}
+                                    {% if likerforum.forum == forume and likerforum.user == app.user%}
+                                        {% set likefull = true %}
+                                        {% if likerforum.liker == 1 %}
+                                            <a class="update" style="position: relative; z-index:1000;" data-ressource="{{forume.id}}">
+                                                <img src="/assets/img/heart-fill.svg" id="img-{{forume.id}}"  style="height:34px;border-style:none;margin-left:1px;filter:invert(91%); position: relative;z-index: -1000;">
+                                            </a>
+                                            {% else %}
+                                            <a class="update" style="position: relative; z-index:1000;" data-ressource="{{forume.id}}">
+                                                <img  src="/assets/img/heart.svg" id="img-{{forume.id}}"  style="height:34px;border-style:none;margin-left:1px;filter:invert(91%); position: relative;z-index: -1000;">
+                                            </a>
+                                        {% endif %}  
+                                    {% endif %}
+
+                                {% else %}
+                                {% endfor %}
+                                    {% if likefull == false  %}
+                                            <a class="newliker" style="position: relative; z-index:1000;" data-ressource="{{forume.id}}">
+                                                <img  src="/assets/img/heart.svg" id="img-{{forume.id}}"  style="height:34px;border-style:none;margin-left:1px;filter:invert(91%); position: relative;z-index: -1000;">
+                                            </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -59,9 +87,6 @@
             </div>
             </div>
             {% else %}
-                <tr>
-                    <td colspan="7">no records found</td>
-                </tr>
             {% endfor %}
         
 
@@ -71,6 +96,63 @@
     {{ include('forum/_form.html.twig') }}
     </section>
     <script>
+        var elements2 = document.getElementsByClassName("update");
+            update = function() {
+            var id = event.target.getAttribute('data-ressource');
+            var imgsrc = document.getElementById('img-'+id).src;
+            number = document.getElementById('num-'+id).innerHTML;
+            
+            //condition pour l'url
+            if (imgsrc == "{{ url('app_home')}}"+"assets/img/heart.svg"){
+                var url = "{{ url('app_liker_updateliker')}}"+"?idforum="+id+"&update=1";
+                console.log(url);
+                //convert string to int 
+                number2 = parseInt(number, 10)+1;
+                document.getElementById('num-'+id).innerHTML = number2.toString();
+                document.getElementById('img-'+id).src = '/assets/img/heart-fill.svg';
+            } else {
+                var url = "{{ url('app_liker_updateliker')}}"+"?idforum="+id+"&update=0";
+                console.log(url);
+                number2 = parseInt(number, 10)-1;
+                document.getElementById('num-'+id).innerHTML = number2.toString();
+                document.getElementById('img-'+id).src = '/assets/img/heart.svg';
+            }
+            
+            //condition par rapport al la value
+            const req = new XMLHttpRequest();
+            req.open("GET", url);
+            req.send();
+
+            
+        };
+        Array.from(elements2).forEach(function(element) {
+            element.addEventListener('click', update);
+        });
+        var elements = document.getElementsByClassName("newliker");
+        console.log(elements);
+            function newliker() {
+            var id = event.target.getAttribute('data-ressource');
+            var url =  "{{ url('app_likerforum_newliker') }}"+"?idforum="+id;
+            console.log(url);
+            const req = new XMLHttpRequest();
+            req.open("GET", url);
+            req.send();
+
+            //changer le src img
+            document.getElementById('img-'+id).src = '/assets/img/heart-fill.svg';
+            //compteur +1 sauf si compteur trop grand
+            number = document.getElementById('num-'+id).innerHTML;
+            //convert string to int 
+            number2 = parseInt(number, 10)+1;
+            document.getElementById('num-'+id).innerHTML = number2.toString();
+            //changer le onclick class event
+            this.classList.remove("newliker");
+            this.classList.add("update");
+        };
+        Array.from(elements).forEach(function(element) {
+            element.addEventListener('click', newliker);
+        });
+    
         function activebar() {
             if(document.getElementById("searchBox").value==''){
                 console.log("ok2");

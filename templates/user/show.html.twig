@@ -4,7 +4,7 @@
 
 {% block body %}
     <header class="mb-5 pb-0" style="margin: 0px;padding: 0px;height: 1040px;">
-        <div class="container" style="margin-bottom: 0px;margin-top: 89px;background: #212529;border-radius: 6px;height: 151px;width: 800px;min-height: 151px;">
+        <div class="container" style="display: table; margin-bottom: 0px;margin-top: 89px;background: #212529;border-radius: 6px;height: 151px;width: 800px;min-height: 151px;">
             <div class="row">
                 <div class="col-xl-2" style="height: 150px;">
                 {% if user.profilImage == null  %}
@@ -20,56 +20,29 @@
             </div>
 
         </div>
-        <div class="container" style="margin-bottom: 0px;margin-top: 89px;background: #212529;border-radius: 6px;height: 800px;width: 800px;min-height: 0px;">
+        <div class="container" style="margin-bottom: 0px;margin-top: 89px;background: #212529;border-radius: 6px;padding-bottom: 25px;width: 800px;min-height: 0px;">
             <div class="row">
                 <div class="col">
                     <p style="color: #ededed;text-align: center;font-size: 26px;margin-top: 13px;">VOTRE BIBLIOTHÈQUE</p>
                 </div>
             </div>
 
-            <div class="row" style="height: 210px;">
+            <div class="row" style="">
+            {% for ressource in ressources %}
+            {% if ressource.user == app.user %}
                 <div class="col">
-                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" />
+                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px; margin-top: 35px;">
+                    <img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" href="{{ path('app_ressource_show', {'id': ressource.id}) }}" src="{{ressource.image}}" width="354" height="200" />
                         <div style="border-radius: 5px;margin-top: -39px;background: #1d1e1e;opacity: 0.50;height: 39px;">
-                            <p style="color: #ededed;height: 40px;text-align: center;">Nom Ressource</p>
+                            <p style="color: #ededed;height: 40px;text-align: center;"><a style="text-decoration: none;" href="{{ path('app_ressource_show', {'id': ressource.id}) }}">{{ ressource.titre }}</a></p>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;">
-                        <img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" />
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px">
-                    <img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
-                </div>
-            </div>
-            <div class="row" style="height: 210px;margin-top: 35px;">
-                <div class="col">
-                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
-                </div>
-                <div class="col">
-                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
-                </div>
-                <div class="col">
-                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
-                </div>
-            </div>
-            <div class="row" style="height: 210px;margin-top: 35px;">
-                <div class="col">
-                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
-                </div>
-                <div class="col">
-                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
-                </div>
-                <div class="col">
-                    <div class="card" style="background: #212529;width: 209.312px;margin-left: 20px;"><img class="card-img-top w-100 d-block fit-cover" style="height: 207.328px;border-radius: 5px;width: 207.328px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" width="354" height="200" /></div>
-                </div>
-            </div>
+            {% endif %}
+                
+            {% endfor %}
+                
         </div>
     </header>
-
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
 
 {% endblock %}

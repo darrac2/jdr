@@ -16,13 +16,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\ForumCommentaire;
 use App\Form\ForumCommentaireType;
-
+use App\Repository\LikeforumRepository;
 
 #[Route('/forum')]
 class ForumController extends AbstractController
 {
     #[Route('/', name: 'app_forum_index', methods: ['GET', 'POST'])]
-    public function index(ForumRepository $forumRepository,ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager): Response
+    public function index(ForumRepository $forumRepository,ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager, LikeforumRepository $likeforumRepository): Response
     {
         $forum = new Forum();
         $form = $this->createForm(ForumType::class, $forum);
@@ -49,6 +49,7 @@ class ForumController extends AbstractController
             'forums' => $forumRepository->findAll(),
             'forum' => $forum,
             'form' => $form,
+            'likerforums' => $likeforumRepository->findAll(),
         ]);
         
         
@@ -89,7 +90,7 @@ class ForumController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_forum_show', methods: ['GET', 'POST'])]
-    public function show(ForumCommentaireRepository $forumCommentaireRepository, ManagerRegistry $doctrine, Request $request, EntityManagerInterface $entityManager, Forum $forum): Response
+    public function show(ForumCommentaireRepository $forumCommentaireRepository, ManagerRegistry $doctrine, Request $request,LikeforumRepository $likeforumRepository ,EntityManagerInterface $entityManager, Forum $forum): Response
     {   
         //formulaire
         $forumCommentaire = new ForumCommentaire();
@@ -121,11 +122,14 @@ class ForumController extends AbstractController
         $forumCommentaire = $forumCommentaireRepository->findBy(
             array("idForum" =>$forum) 
         );
+        //find all like by forum
+        $forumlikes = $likeforumRepository->findBy(array("forum" =>$forum));
 
         return $this->render('forum/show.html.twig', [
             'forum' => $forum,
             'form' => $form,
             'forum_commentaires' => $forumCommentaire,
+            'likeforums' => $forumlikes,
         ]);
     }
 

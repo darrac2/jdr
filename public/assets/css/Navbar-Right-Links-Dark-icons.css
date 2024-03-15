@@ -54,3 +54,15 @@
   border-radius: 50%;
 }
 
+.inputstyle{
+  border-radius: 5px;
+  width: 250px;
+  margin-bottom: 5px;
+  appearance: auto;
+}
+.checkboxstyle{
+  margin-left: -120px;
+}
+.dropdownstyle{
+  margin-left: -50px;
+}

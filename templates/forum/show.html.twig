@@ -20,17 +20,46 @@
         </div>
         <div class="row">
             <div class="col-xl-1">
-                <div style="height: 50px;width: 55px;margin-right: 0px;"><a class="btn btn-primary ms-md-2" role="button" href="#" style="background: url('person.svg') no-repeat, #ededed;background-size: cover, auto;width: 40px;height: 40px;color: var(--bs-navbar-color);border-radius: 50px;padding-left: 6px;padding-top: 3px;padding-right: 4px;margin-top: 10px;margin-right: 0px;margin-left: 0px;border-width: 2px;border-color: #ededed;"></a></div>
+                <div style="height: 50px;width: 55px;margin-right: 0px;">
+                {% if app.user.profilImage != null %}
+                                    <a class="btn btn-primary ms-md-2" role="button" href="#" style="background: url('{{ forum.user.profilImage }}') no-repeat, #ededed;background-size: cover, auto;width: 40px;height: 40px;color: var(--bs-navbar-color);border-radius: 50px;padding-left: 6px;padding-top: 3px;padding-right: 4px;margin-top: 10px;margin-right: 0px;margin-left: 0px;border-width: 2px;border-color: #ededed;"></a>
+                                    {% else %}
+                                    <a class="btn btn-primary ms-md-2" role="button" href="#" style="background: url('person.svg') no-repeat, #ededed;background-size: cover, auto;width: 40px;height: 40px;color: var(--bs-navbar-color);border-radius: 50px;padding-left: 6px;padding-top: 3px;padding-right: 4px;margin-top: 10px;margin-right: 0px;margin-left: 0px;border-width: 2px;border-color: #ededed;"></a>
+                                {% endif %}
+                </div>
             </div>
             <div class="col-xl-2">
                 <p style="color: #ededed;font-size: 18px;margin-left: 0px;">{{ forum.user.pseudo }}</p>
                 <p style="color: #ededed;margin-left: 0px;margin-top: -15px;">{{ forum.dateCrea ? forum.dateCrea|date('Y-m-d') : '' }}</p>
             </div>
             <div class="col-xl-7">
-                <p style="font-size: 20px;margin-bottom: 0px;margin-top: 20px;color: #ededed;margin-left: 0px;text-align: right;padding-top: 7px;padding-left: 0px;padding-right: 0px;margin-right: -95px;">{{ forum.liker }}</p>
+                <p id="num-{{forum.id}}" style="font-size: 20px;margin-bottom: 0px;margin-top: 20px;color: #ededed;margin-left: 0px;text-align: right;padding-top: 7px;padding-left: 0px;padding-right: 0px;margin-right: -95px;" >{{ forum.liker }}</p>
             </div>
             <div class="col">
-                <div style="margin-top: 20px;width: 58px;margin-left: 84px;"><img src="/assets/img/heart.svg" style="height: 34px;border-style: none;filter: invert(91%);margin-left: 0px;" /></div>
+                <div style="margin-top: 20px;width: 58px;margin-left: 84px;">
+                 {% set likefull = false %}
+                                {% for likerforum in likeforums %}
+                                    {% if likerforum.user == app.user%}
+                                        {% set likefull = true %}
+                                        {% if likerforum.liker == 1 %}
+                                            <a class="update" style="position: relative; z-index:1000;" data-ressource="{{forum.id}}">
+                                                <img src="/assets/img/heart-fill.svg" id="img-{{forum.id}}"  style="height:34px;border-style:none;margin-left:1px;filter:invert(91%); position: relative;z-index: -1000;">
+                                            </a>
+                                            {% else %}
+                                            <a class="update" style="position: relative; z-index:1000;" data-ressource="{{forum.id}}">
+                                                <img  src="/assets/img/heart.svg" id="img-{{forum.id}}"  style="height:34px;border-style:none;margin-left:1px;filter:invert(91%); position: relative;z-index: -1000;">
+                                            </a>
+                                        {% endif %}  
+                                    {% endif %}
+
+                                {% else %}
+                                {% endfor %}
+                                    {% if likefull == false  %}
+                                            <a class="newliker" style="position: relative; z-index:1000;" data-ressource="{{forum.id}}">
+                                                <img  src="/assets/img/heart.svg" id="img-{{forum.id}}"  style="height:34px;border-style:none;margin-left:1px;filter:invert(91%); position: relative;z-index: -1000;">
+                                            </a>
+                                        {% endif %}
+                </div>
             </div>
         </div>
     </div>
@@ -51,15 +80,25 @@
                 </div>
                 <div class="col-xl-2">
                     <div style="width: 24px;margin-top: 10px;margin-left: 93px;height: 24px;">
-                    <button class="btn btn-primary" type="button" style="height: 24px;width: 24px;background: url('reply-fill.svg') no-repeat;background-size: cover;border-style: none;filter: invert(91%);margin-left: 0px;"></button></div>
+                    <a>
+                    <button class="btn btn-primary" type="button" style="height: 24px;width: 24px;background: url('/assets/img/reply-fill.svg') no-repeat;background-size: cover;border-style: none;filter: invert(91%);margin-left: 0px;"></button></div>
+                    </a>
                     <div style="width: 24px;height: 24px;margin-left: 93px;">
-                    <button class="btn btn-primary" type="button" style="height: 24px;width: 24px;background: url('exclamation-triangle-fill.svg');background-size: cover;border-style: none;filter: invert(91%);margin-top: 15px;margin-left: 0px;"></button></div>
+                    <a href="{{path('app_signalementforumcommentaire_new', {'id': forum_commentaire.id})}} ">
+                    <button class="btn btn-primary" type="button" style="height: 24px;width: 24px;background: url('/assets/img/exclamation-triangle-fill.svg');background-size: cover;border-style: none;filter: invert(91%);margin-top: 15px;margin-left: 0px;"></button></div>
+                    </a>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xl-1">
                     <div style="height: 50px;width: 55px;margin-right: 0px;">
-                    <a class="btn btn-primary ms-md-2" role="button" href="#" style="background: url('person.svg') no-repeat, #ededed;background-size: cover, auto;width: 40px;height: 40px;color: var(--bs-navbar-color);border-radius: 50px;padding-left: 6px;padding-top: 3px;padding-right: 4px;margin-top: 10px;margin-right: 0px;margin-left: 0px;border-width: 2px;border-color: #ededed;"></a></div>
+                    {% if forum_commentaire.user.profilImage != null %}
+                                    
+                                    <a class="btn btn-primary ms-md-2" role="button" href="#" style="background: url('{{forum_commentaire.user.profilImage}}') no-repeat, #ededed;background-size: cover, auto;width: 40px;height: 40px;color: var(--bs-navbar-color);border-radius: 50px;padding-left: 6px;padding-top: 3px;padding-right: 4px;margin-top: 10px;margin-right: 0px;margin-left: 0px;border-width: 2px;border-color: #ededed;"></a>
+                                    {% else %}
+                                    <a class="btn btn-primary ms-md-2" role="button" href="#" style="background: url('person.svg') no-repeat, #ededed;background-size: cover, auto;width: 40px;height: 40px;color: var(--bs-navbar-color);border-radius: 50px;padding-left: 6px;padding-top: 3px;padding-right: 4px;margin-top: 10px;margin-right: 0px;margin-left: 0px;border-width: 2px;border-color: #ededed;"></a>
+                                {% endif %}
+                    </div>
                 </div>
                 <div class="col-xl-2">
                     <p style="color: #ededed;font-size: 18px;margin-left: 0px;">{{ forum_commentaire.user.pseudo }}</p>
@@ -76,6 +115,63 @@
     <section style="min-height: 600px;">
     {{ include('forum_commentaire/_form.html.twig') }}
     </section>
+<script>
+        var elements2 = document.getElementsByClassName("update");
+            update = function() {
+            var id = event.target.getAttribute('data-ressource');
+            var imgsrc = document.getElementById('img-'+id).src;
+            number = document.getElementById('num-'+id).innerHTML;
+            
+            //condition pour l'url
+            if (imgsrc == "{{ url('app_home')}}"+"assets/img/heart.svg"){
+                var url = "{{ url('app_liker_updateliker')}}"+"?idforum="+id+"&update=1";
+                console.log(url);
+                //convert string to int 
+                number2 = parseInt(number, 10)+1;
+                document.getElementById('num-'+id).innerHTML = number2.toString();
+                document.getElementById('img-'+id).src = '/assets/img/heart-fill.svg';
+            } else {
+                var url = "{{ url('app_liker_updateliker')}}"+"?idforum="+id+"&update=0";
+                console.log(url);
+                number2 = parseInt(number, 10)-1;
+                document.getElementById('num-'+id).innerHTML = number2.toString();
+                document.getElementById('img-'+id).src = '/assets/img/heart.svg';
+            }
+            
+            //condition par rapport al la value
+            const req = new XMLHttpRequest();
+            req.open("GET", url);
+            req.send();
 
+            
+        };
+        Array.from(elements2).forEach(function(element) {
+            element.addEventListener('click', update);
+        });
+        var elements = document.getElementsByClassName("newliker");
+        console.log(elements);
+            function newliker() {
+            var id = event.target.getAttribute('data-ressource');
+            var url =  "{{ url('app_likerforum_newliker') }}"+"?idforum="+id;
+            console.log(url);
+            const req = new XMLHttpRequest();
+            req.open("GET", url);
+            req.send();
+
+            //changer le src img
+            document.getElementById('img-'+id).src = '/assets/img/heart-fill.svg';
+            //compteur +1 sauf si compteur trop grand
+            number = document.getElementById('num-'+id).innerHTML;
+            //convert string to int 
+            number2 = parseInt(number, 10)+1;
+            document.getElementById('num-'+id).innerHTML = number2.toString();
+            //changer le onclick class event
+            this.classList.remove("newliker");
+            this.classList.add("update");
+        };
+        Array.from(elements).forEach(function(element) {
+            element.addEventListener('click', newliker);
+        });
+</script>
     
 {% endblock %}

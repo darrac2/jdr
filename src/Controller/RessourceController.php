@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Ressource;
 use App\Entity\User;
 use App\Form\RessourceType;
+use App\Repository\LikerRepository;
 use App\Repository\RessourceRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,9 +23,10 @@ use Symfony\Component\Validator\Constraints\File;
 class RessourceController extends AbstractController
 {
     #[Route('/', name: 'app_ressource_index', methods: ['GET'])]
-    public function index(RessourceRepository $ressourceRepository): Response
+    public function index(RessourceRepository $ressourceRepository, LikerRepository $likerRepository): Response
     {
         return $this->render('ressource/index.html.twig', [
+            'liker' => $likerRepository->findAll(),
             'ressources' => $ressourceRepository->findAll(),
         ]);
     }

@@ -25,6 +25,90 @@ class LikeforumController extends AbstractController
             'likeforums' => $likeforumRepository->findAll(),
         ]);
     }
+    #[Route('/new/liker', name: 'app_likerforum_newliker', methods: ['GET'])]
+    public function newliker(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
+    {
+        
+        
+        $liker = new Likeforum();
+        //set ressource 
+        $forumid = $request->query->get('idforum');
+
+        if ($forumid != null) {
+            //user 
+            $repository = $doctrine->getRepository(User::class);
+            $email = $this->getUser()->getUserIdentifier();
+            $user = $repository->findOneBy(array('email' => $email));
+            $liker->setUser($user);
+            //search object ressource
+            $repository2 = $doctrine->getRepository(Forum::class);
+            $forum= $repository2 -> findOneBy(array('id' => $forumid));
+            //verifier si object liker existe deja par rappot a user et ressource
+            $repository3 =  $doctrine->getRepository(Likeforum::class);
+            $like =  $repository3->findOneBy([
+                "user" => $user,
+                "forum"=>$forum
+            ]) ;
+            if($like == null){
+                
+                //ressource ajouter count liker
+                $ressourceliker = $forum->getliker();
+                //find one by user and ressoure
+                $forum->setLiker($ressourceliker + 1 );
+                //rajouter le lien
+                $entityManager->persist($forum);
+                $liker->setForum($forum);
+                //liker set 1
+                $liker->setLiker(1);
+
+
+                $entityManager->persist($liker);
+                $entityManager->flush();
+                $this->addFlash('success', 'Entity created successfully!');
+            }else{
+                //fowrd update
+            
+            }
+            
+            return $this->redirectToRoute('app_home');
+
+        }
+        return $this->redirectToRoute('app_home');
+    }
+    
+    #[Route('/updateliker', name: 'app_liker_updateliker', methods: ['GET'])]
+    public function updatelike(Request $request ,LikeforumRepository $likerRepository, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
+    {
+        
+        //set liker update
+        $likerupdate = $request->query->get('update');
+        $idforum = $request->query->get('idforum');
+        //get user
+        $repository = $doctrine->getRepository(User::class);
+        $email = $this->getUser()->getUserIdentifier();
+        $user = $repository->findOneBy(array('email' => $email));
+        //get ressource
+        $repository2 = $doctrine->getRepository(Forum::class);
+        $forum = $repository2->findOneBy(array('id' => $idforum));
+        //get liker from user and ressource
+        $like = $likerRepository->findOneBy(['user'=>$user,'forum' => $forum]);
+
+        if ($like != null and $user = $like->getUser()){
+                $num = $forum->getLiker();
+                if($likerupdate == 0){
+                    $forum->setLiker($num - 1);
+                }else{
+                    $forum->setLiker($num + 1);
+                }
+                
+                $entityManager->persist($forum);
+                $like->setLiker($likerupdate);
+                $entityManager->persist($like);
+                $entityManager->flush();
+            }
+            return $this->redirectToRoute('app_home');
+
+    }
 
     #[Route('/new', name: 'app_likeforum_new', methods: ['GET'])]
     public function new(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine)

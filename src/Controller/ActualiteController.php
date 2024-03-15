@@ -68,6 +68,10 @@ class ActualiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //set date
+            $date = new DateTime('now');
+            $actualite->setDate($date);
+            $entityManager->persist($actualite);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_actualite_index', [], Response::HTTP_SEE_OTHER);

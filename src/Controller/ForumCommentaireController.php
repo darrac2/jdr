@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Forum;
 use App\Form\ForumCommentaireType;
 use App\Repository\ForumCommentaireRepository;
+use App\Repository\LikeforumRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;

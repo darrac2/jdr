@@ -23,7 +23,12 @@
                     <div class="card-body p-4" style="height: 120px;padding: 24px;padding-top: 0px;color: #212529;background: #212529;">
                         <p class="text-primary card-text mb-0" style="margin-top: -22px;margin-left: -14px;padding-left: 3px;"> <a  class"linkcate" style="color: 2A6496; text-decoration: none;" href="">{{ ressouce.category.name }}</a> </p>
                         <h4 class="card-title" style="text-align: left;padding-bottom: 3px;padding-left: 20px;padding-top: 3px;margin-left: 34px;margin-bottom: 10px;margin-top: 0px;color: #ededed;"> <a  class"linktitle" style="color: #ffffff; text-decoration: none;" href="{{ path('app_ressource_show', {'id': ressouce.id}) }}">{{ ressouce.titre }}</a> </h4>
-                        <div class="d-flex" style="margin-left: 0px;width: 105%;height: 46px;"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-top:-17px;margin-bottom:-6px;margin-left:-13px;margin-right:0px;">
+                        <div class="d-flex" style="margin-left: 0px;width: 105%;height: 46px;">
+                        {% if ressouce.user.profilImage != null %}
+                                    <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="{{ressouce.user.profilImage}}" style="margin-top:-17px;margin-bottom:-6px;margin-left:-13px;margin-right:0px;">
+                                    {% else %}
+                                    <img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-top:-17px;margin-bottom:-6px;margin-left:-13px;margin-right:0px;">
+                                {% endif %}
                             <div class="row" style="width: 95%;">
                                 <div class="col-2" style="width: 70%;min-width: 150px;">
                                     <div>
@@ -35,8 +40,10 @@
                                     <p style="font-size:20px;margin-bottom:2px;margin-top:1px;padding-top:0px;color:#ededed;margin-left:3px;" id="num-{{ressouce.id}}"> {{ ressouce.comptliker }} </p>
                                 </div>
                                 <div class="col" style="width: 15%;padding-right: 0;padding-left: 0;">
+                                {% set likefull = false %}
                                 {% for like in liker %}
                                     {% if like.ressource == ressouce and like.user == app.user%}
+                                        {% set likefull = true %}
                                         {% if like.liker == 1 %}
                                             <a class="update" style="position: relative; z-index:1000;" data-ressource="{{ressouce.id}}">
                                                 <img src="/assets/img/heart-fill.svg" id="img-{{ressouce.id}}"  style="height:34px;border-style:none;margin-left:1px;filter:invert(91%); position: relative;z-index: -1000;">
@@ -45,12 +52,7 @@
                                             <a class="update" style="position: relative; z-index:1000;" data-ressource="{{ressouce.id}}">
                                                 <img  src="/assets/img/heart.svg" id="img-{{ressouce.id}}"  style="height:34px;border-style:none;margin-left:1px;filter:invert(91%); position: relative;z-index: -1000;">
                                             </a>
-                                        {% endif %}
-                                    {% else %}
-                                    <a class="newliker" style="position: relative; z-index:1000;" data-ressource="{{ressouce.id}}">
-                                        <img  src="/assets/img/heart.svg" id="img-{{ressouce.id}}"  style="height:34px;border-style:none;margin-left:1px;filter:invert(91%); position: relative;z-index: -1000;">
-                                    </a>
-                                        
+                                        {% endif %}  
                                     {% endif %}
 
                                 {% else %}
@@ -58,7 +60,11 @@
                                         <img  src="/assets/img/heart.svg" id="img-{{ressouce.id}}"  style="height:34px;border-style:none;margin-left:1px;filter:invert(91%); position: relative;z-index: -1000;">
                                     </a>
                                 {% endfor %}
-                                    
+                                    {% if likefull == false  %}
+                                            <a class="newliker" style="position: relative; z-index:1000;" data-ressource="{{ressouce.id}}">
+                                                <img  src="/assets/img/heart.svg" id="img-{{ressouce.id}}"  style="height:34px;border-style:none;margin-left:1px;filter:invert(91%); position: relative;z-index: -1000;">
+                                            </a>
+                                        {% endif %}
                                     
                                     
                                     
@@ -89,7 +95,7 @@
             </div>
             <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
             {% for actualite in actualites %}
-                <div class="col">
+                <div class="col-3">
                     <div class="card" style="background: #212529;"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
                         <div class="card-body p-4">
                             <h4 class="card-title" style="color: #ededed;">{{ actualite.title }}</h4>
@@ -105,56 +111,27 @@
                     </div>
                 </div>
             {% endfor %}
-                
-                <div class="col">
-                    <div class="card" style="background: #212529;"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
-                        <div class="card-body p-4">
-                            <h4 class="card-title" style="color: #ededed;">Lorem libero donec</h4>
-                            <p class="card-text" style="color: #ededed;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                            <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
-                                <div>
-                                    <p class="fw-bold mb-0" style="color: #ededed;">John Smith</p>
-                                    <p class="text-muted mb-0"></p>
-                                    <p style="color: #ededed;">Titre</p>
-                                </div>
-                                <p style="color: #ededed;padding-left: 70px;padding-top: 25px;">00/00/0000</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card" style="background: #212529;"><img class="card-img-top w-100 d-block fit-cover" style="height: 200px;" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
-                        <div class="card-body p-4">
-                            <h4 class="card-title" style="color: #ededed;">Lorem libero donec</h4>
-                            <p class="card-text" style="color: #ededed;">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus.</p>
-                            <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
-                                <div>
-                                    <p class="fw-bold mb-0" style="color: #ededed;">John Smith</p>
-                                    <p style="color: #ededed;">Titre</p>
-                                </div>
-                                <p style="color: #ededed;padding-left: 70px;padding-top: 25px;">00/00/0000</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
     <script>
-        
         var elements2 = document.getElementsByClassName("update");
             update = function() {
             var id = event.target.getAttribute('data-ressource');
             var imgsrc = document.getElementById('img-'+id).src;
+            number = document.getElementById('num-'+id).innerHTML;
             console.log(imgsrc);
             //ondition pour l'url
             if (imgsrc == "{{ url('app_home')}}"+"assets/img/heart.svg"){
                 var url = "{{ url('app_liker_update')}}"+"?idressource="+id+"&update=1";
-                console.log(url);
+                //convert string to int 
+                number2 = parseInt(number, 10)+1;
+                document.getElementById('num-'+id).innerHTML = number2.toString();
                 document.getElementById('img-'+id).src = '/assets/img/heart-fill.svg';
             } else {
                 var url = "{{ url('app_liker_update')}}"+"?idressource="+id+"&update=0";
-                console.log(url);
+                number2 = parseInt(number, 10)-1;
+                document.getElementById('num-'+id).innerHTML = number2.toString();
                 document.getElementById('img-'+id).src = '/assets/img/heart.svg';
             }
             
@@ -162,18 +139,11 @@
             const req = new XMLHttpRequest();
             req.open("GET", url);
             req.send();
-            //compoter -1
-            number = document.getElementById('num-'+id).innerHTML;
-            console.log(number);
-            //convert string to int 
-            number2 = parseInt(number, 10)-1;
-            console.log(number2.toString());
-            document.getElementById('num-'+id).innerHTML.replace(number2.toString());
+
             
         };
         Array.from(elements2).forEach(function(element) {
             element.addEventListener('click', update);
-            console.log(element);
         });
         var elements = document.getElementsByClassName("newliker");
         console.log(elements);
@@ -189,18 +159,15 @@
             document.getElementById('img-'+id).src = '/assets/img/heart-fill.svg';
             //compteur +1 sauf si compteur trop grand
             number = document.getElementById('num-'+id).innerHTML;
-            console.log(number);
             //convert string to int 
             number2 = parseInt(number, 10)+1;
-            console.log(number2);
-            document.getElementById('num-'+id).innerHTML.replace(number2.toString());
+            document.getElementById('num-'+id).innerHTML = number2.toString();
             //changer le onclick class event
             this.classList.remove("newliker");
             this.classList.add("update");
         };
         Array.from(elements).forEach(function(element) {
             element.addEventListener('click', newliker);
-            console.log(element);
         });
     </script>
 {% endblock %}

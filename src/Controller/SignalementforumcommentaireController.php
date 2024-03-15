@@ -33,6 +33,11 @@ class SignalementforumcommentaireController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //get forumcommanetaire from id
+            $forumcomid = $request->query->get('id');
+            $repository3 = $doctrine->getRepository(ForumCommentaire::class);
+            $forumcommentaire = $repository3->findOneBy(array('id' => $forumcomid));
+            $signalementforumcommentaire->setForumcommentaire($forumcommentaire);
             //user
             $repository = $doctrine->getRepository(User::class);
             $email = $this->getUser()->getUserIdentifier();

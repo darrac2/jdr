@@ -23,6 +23,9 @@ class Actualite
     #[ORM\ManyToOne(inversedBy: 'actualites')]
     private ?User $user = null;
 
+    #[ORM\Column]
+    private ?bool $publier = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Actualite
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function isPublier(): ?bool
+    {
+        return $this->publier;
+    }
+
+    public function setPublier(bool $publier): static
+    {
+        $this->publier = $publier;
 
         return $this;
     }

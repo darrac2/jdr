@@ -21,10 +21,10 @@ class Ressource
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $fichier = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -33,7 +33,7 @@ class Ressource
     #[ORM\ManyToOne(cascade: ['persist', 'remove'])]
     private ?Category $category = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: false)]
     private ?int $status = null;
 
     #[ORM\Column]
