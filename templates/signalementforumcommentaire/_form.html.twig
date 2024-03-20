@@ -1,4 +1,31 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+      <div class="row">
+                    <div class="col" >
+                        <div class="row"  style="text-align: left;">
+                            <div class="col-2"></div>
+                            <div class="col-3">
+                                <p class="" style="color: var(--bs-body-bg);">{{ form_label(form.sujet) }}</p>
+                            </div>
+                            <div class="col-6">
+                                {{ form_widget(form.sujet) }}
+                            </div>
+                        </div>   
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" >
+                        <div class="row"  style="text-align: left;">
+                            <div class="col-2"></div>
+                            <div class="col-3">
+                        <p class="" style="color: var(--bs-body-bg);">{{ form_label(form.message) }}</p>
+                        </div>
+                        <div class="col-6">
+                        {{ form_widget(form.message) }}
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col" style="text-align: center;"><button class="btn btn-primary" type="submit" style="background: rgb(6,133,18);border-style: none;margin-top: 20px;" >{{ button_label|default('Enregister') }}</button></div>
+            </div>
 {{ form_end(form) }}

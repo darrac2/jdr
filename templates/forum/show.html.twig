@@ -17,6 +17,16 @@
                     {{ forum.description | raw }}
                 </div>
             </div>
+            <div class="col-xl-2">
+                    <div style="width: 24px;margin-top: 10px;margin-left: 93px;height: 24px;">
+                    <a>
+                    <button class="btn btn-primary" type="button" style="height: 24px;width: 24px;background: url('/assets/img/reply-fill.svg') no-repeat;background-size: cover;border-style: none;filter: invert(91%);margin-left: 0px;"></button></div>
+                    </a>
+                    <div style="width: 24px;height: 24px;margin-left: 93px;">
+                    <a href="{{path('app_signalementforum_new', {'id': forum.id})}} ">
+                    <button class="btn btn-primary" type="button" style="height: 24px;width: 24px;background: url('/assets/img/exclamation-triangle-fill.svg');background-size: cover;border-style: none;filter: invert(91%);margin-top: 15px;margin-left: 0px;"></button></div>
+                    </a>
+                </div>
         </div>
         <div class="row">
             <div class="col-xl-1">

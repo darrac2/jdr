@@ -3,13 +3,15 @@
 {% block title %}Signalementforumcommentaire index{% endblock %}
 
 {% block body %}
-    <h1>Signalementforumcommentaire index</h1>
+    <h1>Signalement des commentaire forum</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Sujet</th>
+                <th>Commentaire</th>
+                <th>User </th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -18,6 +20,8 @@
             <tr>
                 <td>{{ signalementforumcommentaire.id }}</td>
                 <td>{{ signalementforumcommentaire.sujet }}</td>
+                <td>{{ signalementforumcommentaire.message }}</td>
+                <td>{{ signalementforumcommentaire.user.pseudo}}</td>
                 <td>
                     <a href="{{ path('app_signalementforumcommentaire_show', {'id': signalementforumcommentaire.id}) }}">show</a>
                     <a href="{{ path('app_signalementforumcommentaire_edit', {'id': signalementforumcommentaire.id}) }}">edit</a>

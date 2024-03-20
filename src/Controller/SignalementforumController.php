@@ -38,7 +38,7 @@ class SignalementforumController extends AbstractController
             $email = $this->getUser()->getUserIdentifier();
             $user = $repository->findOneBy(array('email' => $email));
             $signalementforum->setUser($user);
-            $id=$request->attributes->get("idforum");
+            $id=$request->get("id");
             $repository2= $doctrine->getRepository(Forum::class);
             $forum = $repository2->findOneBy(array('id' => $id));
             $signalementforum->setForum($forum);
@@ -46,7 +46,7 @@ class SignalementforumController extends AbstractController
             $entityManager->persist($signalementforum);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_signalementforum_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_forum_show', ["id" =>$id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('signalementforum/new.html.twig', [

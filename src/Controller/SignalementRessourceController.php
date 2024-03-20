@@ -38,14 +38,14 @@ class SignalementRessourceController extends AbstractController
             $email = $this->getUser()->getUserIdentifier();
             $user = $repository->findOneBy(array('email' => $email));
             $signalementRessource->setUser($user);
-            $id=$request->attributes->get("idressource");
+            $id=$request->get("id");
             $repository2= $doctrine->getRepository(Ressource::class);
             $ressource = $repository2->findOneBy(array('id' => $id));
             $signalementRessource->setRessource($ressource);
             $entityManager->persist($signalementRessource);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_signalement_ressource_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_ressource_show', ['id' => $id,], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('signalement_ressource/new.html.twig', [

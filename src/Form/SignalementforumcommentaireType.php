@@ -15,7 +15,7 @@ class SignalementforumcommentaireType extends AbstractType
         $builder
             ->add('sujet', ChoiceType::class, [
                 'choices'  => [
-                    'Sélectionnez un motif' => "0",
+                    'Sélectionnez un motif' => null,
                     "Pédopornographie" => "Pédopornographie",
                     'Pédopornographie' => 'Propos haineux, discrimination, négationnisme',
                     'Menaces physiques '=> 'Menaces physiques ',
@@ -36,7 +36,7 @@ class SignalementforumcommentaireType extends AbstractType
                 'label' => 'Motif : ', 
                 'attr' => array('class' => 'inputstyle form-control '),
                 'required' => true])
-            ->add('forumcommentaire')
+            ->add('message')
         ;
     }
 

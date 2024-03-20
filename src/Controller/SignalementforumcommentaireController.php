@@ -44,7 +44,7 @@ class SignalementforumcommentaireController extends AbstractController
             $user = $repository->findOneBy(array('email' => $email));
             $signalementforumcommentaire->setUser($user);
             //forum commentaire
-            $id=$request->attributes->get("idforumcom");
+            $id=$request->get("id");
             $repository2= $doctrine->getRepository(ForumCommentaire::class);
             $forumcommentaire = $repository2->findOneBy(array('id' => $id));
             $signalementforumcommentaire->setForumcommentaire($forumcommentaire);
@@ -52,8 +52,7 @@ class SignalementforumcommentaireController extends AbstractController
 
             $entityManager->persist($signalementforumcommentaire);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_signalementforumcommentaire_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_forum_show', ["id" => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('signalementforumcommentaire/new.html.twig', [
