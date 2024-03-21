@@ -1,3 +1,4 @@
+<?php
 namespace App\Security;
 
 use App\Entity\User as AppUser;
@@ -14,10 +15,16 @@ class UserChecker implements UserCheckerInterface
             return;
         }
 
-        if ($user->isDeleted()) {
+        if ($user->isVerified() != true ) {
+
+            // the message passed to this exception is meant to be displayed to the user
+            throw new CustomUserMessageAccountStatusException("Votre compte n'a pas verifé, merci de confirmer votre mail.");
+        }
+
+        /*if ($user->isDeleted()) {
             // the message passed to this exception is meant to be displayed to the user
             throw new CustomUserMessageAccountStatusException('Your user account no longer exists.');
-        }
+        }*/
     }
 
     public function checkPostAuth(UserInterface $user): void
@@ -27,8 +34,8 @@ class UserChecker implements UserCheckerInterface
         }
 
         // user account is expired, the user may be notified
-        if ($user->isExpired()) {
+        /*if ($user->isExpired()) {
             throw new AccountExpiredException('...');
-        }
+        }*/
     }
 }

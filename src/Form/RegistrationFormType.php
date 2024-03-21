@@ -19,8 +19,8 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('pseudo', TextType::class, ['attr'=>[
-                'label' => false,
-                'label_html' => false,
+                'label' => "",
+                'label_html' => "",
                 'class'=>'form-control registerpseudo',
                 'placeholder'=>'Pseudo']])
             ->add('email', EmailType::class, [
@@ -31,6 +31,7 @@ class RegistrationFormType extends AbstractType
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passes doivent correspondre.',
+                'invalid_message_parameters' => ['class' => "alert alert-danger"],
                 'options' => ['attr' => ['class' => 'password-field registerpassword form-control','placeholder'=>'Mot de passe']],
                 'required' => true,
                 'first_options'  => ['label' => false, 'label_html' => false],
@@ -44,7 +45,7 @@ class RegistrationFormType extends AbstractType
                 'label_html' => false,
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'Vous devez accepter les terme d&#39;utilisation.',
+                        'message' => 'Vous devez accepter les termes d&#39;utilisation.',
                     ]),
                 ],
             ])

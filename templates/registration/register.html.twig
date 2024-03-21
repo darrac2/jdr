@@ -5,18 +5,22 @@
 {% block body %}
 <link rel="stylesheet" href="/assets/css/stylesinput.css">
     {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        <div class="alert alert-danger" style="color:white;" role="alert">{{ flash_error }}</div>
     {% endfor %}
+
+    <div style="color:white;"
     {{ form_errors(registrationForm) }}
+    </div>
     {{ form_start(registrationForm) }}
-<section class="mb-5 pb-0" style="margin: 0px;padding: 0px;height: 473px;">
-    <div class="container" style="margin-bottom: 0px;margin-top: 89px;background: #212529;border-radius: 6px;height: 404px;width: 700px;">
+    
+<section class="mb-5 pb-0" style="margin: 0px;padding: 0px;">
+    <div class="container" style="margin-bottom: 0px;margin-top: 89px;padding-bottom:15px;background: #212529;border-radius: 6px;width: 700px;">
         <div class="row">
             <div class="col">
                 <p style="color: #ededed;text-align: center;font-size: 30px;margin-top: 13px;">Inscription</p>
                 <div class="row">
                     <div class="col" style="text-align: left;">
-                        {{ form_row(registrationForm.pseudo) }}
+                        {{ form_widget(registrationForm.pseudo) }}
                     </div>
                 </div>
                 <div class="row">
