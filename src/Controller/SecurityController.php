@@ -20,13 +20,8 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        // add your custom condition here
-        if ($lastUsername && !filter_var($lastUsername, FILTER_VALIDATE_EMAIL)) {
-            // if the email is not valid, redirect back to the login page with an error message
-            $this->addFlash('error', 'Le courriel saisi n\'est pas valide.');
-
-            return $this->redirectToRoute('app_login');
-        }
+        //verifier si l'user est vefifier via is verified field
+        
 
 
 

@@ -4,6 +4,9 @@
 
 {% block body %}
 <link rel="stylesheet" href="/assets/css/stylesinput.css">
+{% for flash_error in app.flashes('verify_email') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
 <form style="text-align: left;" method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

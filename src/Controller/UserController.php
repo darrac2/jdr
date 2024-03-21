@@ -71,7 +71,7 @@ class UserController extends AbstractController
                 //creer dosier user if d'ont exist
                 $userid = $user->getId(); 
                 $source = $this->getParameter("data_directory");
-                $url = $source."/".$userid."/profile";
+                $url = "/data/".$userid."/profile";
                 if (file_exists( $url) == false){
                     mkdir($url, 0770, true );
                 }
