@@ -80,7 +80,7 @@ class UserController extends AbstractController
                     $url,
                     $newFilename
                 );
-                $user->setProfilImage($url."/".$newFilename);
+                $user->setProfilImage($url);
             } catch (FileException $e) {
                 // ... handle exception if something happens during file upload
             }
@@ -181,8 +181,8 @@ class UserController extends AbstractController
                 try {
                     //creer dosier user if d'ont exist
                     $userid = $user->getId(); 
-                    $source = $this->getParameter("data_directory");
-                    $url = $source."/".$userid."/profile";
+                    $source = $this->getParameter('kernel.project_dir');
+                    $url = $source."/data/".$userid."/profile";
                     if (file_exists( $url) == false){
                         mkdir($url, 0770, true );
                     }
@@ -191,7 +191,8 @@ class UserController extends AbstractController
                         $url,
                         $newFilename
                     );
-                    $user->setProfilImage($url."/".$newFilename);
+                    $url = "/data/".$userid."/profile/".$newFilename;
+                    $user->setProfilImage($url);
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }

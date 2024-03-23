@@ -109,7 +109,7 @@ class RessourceController extends AbstractController
             $entityManager->persist($ressource);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_ressource_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('ressource/new.html.twig', [
