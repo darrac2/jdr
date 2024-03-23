@@ -10,8 +10,10 @@
  {% for flash_error in app.flashes('success') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-    {% if app.user.is_verified != 'true' %}
-         <div class="alert alert-danger" role="alert">Vous devez validé votre adresse mail.</div>
+    {% if app.user%}
+        {% if app.user.isverified != 'true' %}
+            <div class="alert alert-danger" role="alert">Vous devez validé votre adresse mail.</div>
+        {% endif %}
     {% endif %}
     <section>
       <div class="container py-4 py-xl-5">
