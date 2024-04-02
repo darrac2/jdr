@@ -28,11 +28,14 @@
                     <div class="col-xl-2" style="width: 217px;">
                     <a class="btn btn-primary ms-md-2" role="button" href="#" style="background: url('{{ressource.user.profilImage}} ') no-repeat, #ededed;background-size: cover, auto;width: 55px;height: 55px;color: var(--bs-navbar-color);border-radius: 50px;padding-left: 6px;padding-top: 3px;padding-right: 4px;margin-top: 0px;margin-right: 10px;margin-left: 0px;border-width: 2px;border-color: #ededed;"></a><a href="#" style="color: #ededed;font-size: 24px;text-decoration: none;">{{ressource.user.pseudo}} </a></div>
                 </div>
-                {% if ressource.fichier != null %}
+                {% if app.user %}
+                    {% if ressource.fichier != null %}
                 
                     <div><a href='{{ressource.fichier}}' download><button class="btn btn-primary" href='' type="button" style="background: #212529;color: var(--bs-btn-bg);border-style: none;height: 45px;font-size: 20px;border-radius: 8px;width: 125px;">Télécharger</button>
                     </a></div>
                 {% endif %}
+                {% endif %}
+                
                 
             </div>
         </div>

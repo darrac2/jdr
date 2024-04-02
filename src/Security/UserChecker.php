@@ -36,8 +36,7 @@ class UserChecker implements UserCheckerInterface
 
         // user account is expired, the user may be notified
         if ($user->isisVerified() != true ) {
-            $this->$this->addFlash('verify_email', 'Veuillez verifier votre email pour confirmer votre compte');
-            return  $this->$this->forward("App\Controller\UserController::profil");
+           
         }
     }
 }
