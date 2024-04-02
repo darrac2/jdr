@@ -9,7 +9,9 @@ use App\Form\ProfileType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Util\Filesystem;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem as FilesystemFilesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,7 +75,7 @@ class UserController extends AbstractController
                 $source = $this->getParameter("data_directory");
                 $url = "/data/".$userid."/profile";
                 if (file_exists( $url) == false){
-                    mkdir($url, 0770, true );
+                    mkdir($url, 0775, true );
                 }
                 
                 $imagesource->move(   
@@ -165,7 +167,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/profile/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function descedit(Request $request, User $user, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function descedit(Request $request, User $user, EntityManagerInterface $entityManager, SluggerInterface $slugger, FilesystemFilesystem $filesystem): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -191,6 +193,7 @@ class UserController extends AbstractController
                         $url,
                         $newFilename
                     );
+                    $filesystem->chmod($source."/data/", 0777, 0000, true);
                     $url = "/data/".$userid."/profile/".$newFilename;
                     $user->setProfilImage($url);
                 } catch (FileException $e) {

@@ -58,7 +58,7 @@ class RessourceController extends AbstractController
                     $source = $this->getParameter("data_directory");
                     $url = "/data/".$userid."/ressourse";
                     if (file_exists( $url) == false){
-                        mkdir($url, 0770, true );
+                        mkdir($url, 0775, true );
                     }
                     
                     $imagesource->move(

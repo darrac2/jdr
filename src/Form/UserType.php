@@ -45,6 +45,7 @@ class UserType extends AbstractType
                 'attr' => array('class' => 'inputstyle form-control'),
             ])
             ->add('description', TextareaType::class,[
+                'required' => false,
                 'attr' => array('class' => 'inputstyle form-control'),
             ])
         ;

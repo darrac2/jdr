@@ -45,7 +45,10 @@ class ResetPasswordController extends AbstractController
                 $form->get('email')->getData(),
                 $mailer,
                 $translator
-            );
+            ) and $this->render('reset_password/request.html.twig', [
+                'requestForm' => $form->createView(),
+                 $this->addFlash('email', 'Veuillez verifier votre boite mail pour réinitialiser votre mot de passe.'),
+            ]);;
         }
 
         return $this->render('reset_password/request.html.twig', [
