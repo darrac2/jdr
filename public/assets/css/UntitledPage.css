@@ -1,0 +1,67 @@
+.untitled-page.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px 0px;
+  background-color: white;
+  overflow: hidden;
+}
+.untitled-page .content_box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgba(17, 17, 28, 0.749);
+}
+.untitled-page .flex_row {
+  display: flex;
+  margin: 12px auto 0px;
+  width: 76.33%;
+}
+.untitled-page .image {
+  width: 99px;
+  height: 79px;
+}
+.untitled-page .subtitle {
+  margin: 21px 0px 35px;
+  font: 400 20px/1.14 "Roboto", Helvetica, Arial, serif;
+  color: white;
+}
+.untitled-page .flex_col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 0px 279px;
+  width: 90.67%;
+}
+.untitled-page .flex_col1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 41px 0px;
+  width: 100%;
+}
+.untitled-page .hero_title {
+  font: 400 48px/1.16 "Roboto", Helvetica, Arial, serif;
+  color: black;
+}
+.untitled-page .highlight {
+  font: 400 16px/1.18 "Roboto", Helvetica, Arial, serif;
+  color: black;
+}
+.untitled-page .content_box1 {
+  display: flex;
+  flex-direction: column;
+  margin: 68px 0px 0px;
+  width: 47.79%;
+  background-color: rgba(217, 217, 217, 0.98);
+}
+.untitled-page .subtitle1 {
+  margin: 30px 39px 29px 35px;
+  font: 400 20px/1.14 "Roboto", Helvetica, Arial, serif;
+  color: black;
+}
+.untitled-page .highlight1 {
+  margin: 70px 0px 0px;
+  font: 400 16px/1.18 "Roboto", Helvetica, Arial, serif;
+  color: black;
+}

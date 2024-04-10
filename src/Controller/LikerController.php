@@ -29,8 +29,6 @@ class LikerController extends AbstractController
     #[Route('/new', name: 'app_liker_new', methods: ['GET'])]
     public function new(Request $request, EntityManagerInterface $entityManager, ManagerRegistry $doctrine): Response
     {
-        
-        
         $liker = new Liker();
         //set ressource 
         $ressourceid = $request->query->get('idressource');
@@ -42,6 +40,7 @@ class LikerController extends AbstractController
             $user = $repository->findOneBy(array('email' => $email));
             $liker->setUser($user);
             //search object ressource
+            
             $repository2 = $doctrine->getRepository(Ressource::class);
             $ressource= $repository2 -> findOneBy(array('id' => $ressourceid));
             //verifier si object liker existe deja par rappot a user et ressource

@@ -1,9 +1,55 @@
-<h1>Hi!</h1>
+<p>Le lien expire dans  {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
 
-<p>To reset your password, please visit the following link</p>
+<!DOCTYPE html>
+<html>
+<!--  This source code is exported from pxCode, you can get more document from https://www.pxcode.io  -->
 
-<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-<p>This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
 
-<p>Cheers!</p>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link rel="stylesheet" type="text/css" href="/assets//css/common.css" />
+    <link rel="stylesheet" type="text/css" href="/assets//css/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="/assets//css/UntitledPage.css" />
+    <script type="text/javascript" src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/sticky-js@1.3.0/dist/sticky.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/headroom.js@0.12.0/dist/headroom.min.js"></script>
+
+
+
+</head>
+
+<body class="flex-column">
+    <div class="untitled-page root">
+        <div class="content_box">
+            <div class="flex_row">
+                <img class="image" src="/assets/img/pngegg_3.png" alt="alt text" />
+                <h3 class="subtitle">Le grimoire du rôle play</h3>
+            </div>
+        </div>
+        <div class="flex_col">
+            <div class="flex_col1">
+                <h1 class="hero_title">BIENVENUE</h1>
+                <h5 class="highlight">Veuillez confirmer votre adresse email en cliquant sur le boutton ci-dessous :</h5>
+            </div>
+             <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">
+            <div class="content_box1">
+                <h3 class="subtitle1">CONFIRMER L’EMAIL</h3>
+            </div>
+            </a>
+            <h5 class="highlight1">
+                Si le bouton ci-dessus ne fonctionne pas, copiez et collez ce lien dans votre navigateur :<br/>
+                <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+            </h5>
+        </div>
+    </div>
+    <script type="text/javascript">
+        AOS.init();
+        new Sticky('.sticky-effect');
+    </script>
+</body>
+
+</html>
